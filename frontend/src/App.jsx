@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import ClientsPage from './pages/ClientsPage';
 import ServiceLevelsPage from './pages/ServiceLevelsPage';
 import AssignmentsPage from './pages/AssignmentsPage';
+import BranchesPage from './pages/BranchesPage';
 
 
 function App(){
@@ -17,15 +18,17 @@ function App(){
       <Router>
         <nav className = 'appNav'>
           <Link to="/" style={{ padding: "12px"}}>Home</Link>
+          <Link to="/branches" style={{ padding: "12px"}}>Branches</Link>
           <Link to="/advisors" style={{ padding: "12px"}}>Advisors</Link>
           <Link to="/clients" style={{ padding: "12px"}}>Clients</Link>
-          <Link to ="/serviceLevels" style={{ padding: "12px"}}>Service Levels</Link>
-          <Link to="/assignments">Assignments</Link>
+          <Link to="/serviceLevels" style={{ padding: "12px"}}>Service Levels</Link>
+          <Link to="/assignments" style={{ padding: "12px"}}>Assignments</Link>
 
         </nav>
 
         <Routes>
           <Route path="/" element = {<HomePage />}/>
+          <Route path="/branches" element = {<BranchesPage/>} />
           <Route path="/advisors" element = {<AdvisorsPage />} />
           <Route path="/clients" element = {<ClientsPage/>} />
           <Route path="/serviceLevels" element = {<ServiceLevelsPage/>} />
@@ -37,7 +40,3 @@ function App(){
 };
 
 export default App;
-
-
-
-
