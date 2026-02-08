@@ -3,7 +3,7 @@ function HomePage() {
         <>
             <h1></h1>
             <div className="homepageDescription">
-                <p>Palceholder description</p>
+                <p>Use the buttons above to navigate to the various pages that contain sample data.</p>
                 <footer>Kyle Etzelmiller & Lucca Truitt 2025 &copy; </footer>
             </div>
         </>
