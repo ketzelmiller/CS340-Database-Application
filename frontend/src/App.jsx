@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from 'react-router-dom';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+import AdvisorsPage from './pages/AdvisorsPage';
+import HomePage from './pages/HomePage';
+import ClientsPage from './pages/ClientsPage';
+import ServiceLevelsPage from './pages/ServiceLevelsPage';
+import AssignmentsPage from './pages/AssignmentsPage';
+import BranchesPage from './pages/BranchesPage';
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+function App(){
+  return(
+    <div className ='app'>
+      <h1>Financial Advisory Services Portal</h1>
+
+      <Router>
+        <nav className = 'appNav'>
+          <Link to="/" style={{ padding: "12px"}}>Home</Link>
+          <Link to="/branches" style={{ padding: "12px"}}>Branches</Link>
+          <Link to="/advisors" style={{ padding: "12px"}}>Advisors</Link>
+          <Link to="/clients" style={{ padding: "12px"}}>Clients</Link>
+          <Link to="/serviceLevels" style={{ padding: "12px"}}>Service Levels</Link>
+          <Link to="/assignments" style={{ padding: "12px"}}>Assignments</Link>
+
+        </nav>
+
+        <Routes>
+          <Route path="/" element = {<HomePage />}/>
+          <Route path="/branches" element = {<BranchesPage/>} />
+          <Route path="/advisors" element = {<AdvisorsPage />} />
+          <Route path="/clients" element = {<ClientsPage/>} />
+          <Route path="/serviceLevels" element = {<ServiceLevelsPage/>} />
+          <Route path="/assignments" element = {<AssignmentsPage/>} />
+        </Routes>
+      </Router>
+    </div>
   )
-}
+};
 
-export default App
+export default App;
