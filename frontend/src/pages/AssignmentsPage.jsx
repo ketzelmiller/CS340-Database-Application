@@ -1,3 +1,8 @@
+// Citation for the following function:
+// Date: 2/16/2026
+// Adapted from
+// Source URL: https://www.youtube.com/watch?v=dYjdzpZv5yc and react documentation at https://react.dev
+
 function AssignmentsPage(){
   return(
     <div classname = 'assignmentsTable' style={{ padding: "20px"}}>
@@ -12,6 +17,8 @@ function AssignmentsPage(){
             <th>Service Level</th>
             <th>Relationship Start Date</th>
             <th>Relationship End Date</th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
         </thead>
 
@@ -23,6 +30,8 @@ function AssignmentsPage(){
             <td>Planning Only</td>
             <td>2025-01-27</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>2</td>
@@ -31,6 +40,8 @@ function AssignmentsPage(){
             <td>Managed Portfolio</td>
             <td>2025-04-23</td>
             <td>2025-07-12</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>3</td>
@@ -39,6 +50,8 @@ function AssignmentsPage(){
             <td>Planning Only</td>
             <td>2025-03-21</td>
             <td>2025-07-18</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>4</td>
@@ -47,6 +60,8 @@ function AssignmentsPage(){
             <td>Managed Portfolio</td>
             <td>2025-03-12</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>5</td>
@@ -55,6 +70,8 @@ function AssignmentsPage(){
             <td>Planning Only</td>
             <td>2025-04-22</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>6</td>
@@ -63,6 +80,8 @@ function AssignmentsPage(){
             <td>Rebalancing Guideance</td>
             <td>2025-08-19</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>7</td>
@@ -71,6 +90,8 @@ function AssignmentsPage(){
             <td>Managed Portfolio</td>
             <td>2025-09-03</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>8</td>
@@ -79,6 +100,8 @@ function AssignmentsPage(){
             <td>Rebalancing Guideance</td>
             <td>2025-12-04</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>9</td>
@@ -87,6 +110,8 @@ function AssignmentsPage(){
             <td>Rebalancing Guideance</td>
             <td>2025-06-04</td>
             <td>2025-06-07</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>10</td>
@@ -95,6 +120,8 @@ function AssignmentsPage(){
             <td>Planning Only</td>
             <td>2025-07-25</td>
             <td>2025-10-29</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>11</td>
@@ -103,6 +130,8 @@ function AssignmentsPage(){
             <td>Managed Portfolio</td>
             <td>2025-01-17</td>
             <td>2025-04-10</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>12</td>
@@ -111,6 +140,8 @@ function AssignmentsPage(){
             <td>Planning Only</td>
             <td>2025-04-03</td>
             <td>2025-09-16</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>13</td>
@@ -119,6 +150,8 @@ function AssignmentsPage(){
             <td>Rebalancing Guideance</td>
             <td>2025-04-08</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>14</td>
@@ -127,6 +160,8 @@ function AssignmentsPage(){
             <td>Managed Portfolio</td>
             <td>2025-08-09</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>15</td>
@@ -135,6 +170,8 @@ function AssignmentsPage(){
             <td>Planning Only</td>
             <td>2025-02-13</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>16</td>
@@ -143,6 +180,8 @@ function AssignmentsPage(){
             <td>Rebalancing Guideance</td>
             <td>2025-04-09</td>
             <td>Ongoing</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>17</td>
@@ -151,9 +190,69 @@ function AssignmentsPage(){
             <td>Rebalancing Guideance</td>
             <td>2025-04-05</td>
             <td>2025-04-09</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
         </tbody>
       </table>
+
+      <hr></hr>
+
+      <h2>Insert Assignment</h2> 
+      <form>
+        <label>
+          Select Advisor:
+          <select name="selectedServiceLevel">
+            <option value="James Kirk">James Kirk</option>
+            <option value="Jean-Luc Picard">Jean-Luc Picard</option>
+            <option value="Benjamin Sisko">Benjamin Sisko</option>
+            <option value="Kathyrn Janeway">Bejamin Sisko</option>
+            <option value="Jonathan Archer">Jonathan Archer</option>
+            <option value="Elim Garak">Elim Garak</option>
+          </select>
+        </label>
+        <br></br>
+        <label>
+          Select Client:
+          <select name="selectedServiceLevel">
+            <option value="Montgomery Scott">Montgomery Scott</option>
+            <option value="Hikaru Sulu">Hikaru Sulu</option>
+            <option value="Pavel Chekov">Pavel Chekov</option>
+            <option value="William Riker">William Riker</option>
+            <option value="Deanna Troi">Deanna Troi</option>
+            <option value="Geordi La Forge">Geordi La Forge</option>
+            <option value="Jadzia Dax">Jadzia Dax</option>
+            <option value="Kira Nerys">Kira Nerys</option>
+            <option value="Thomas Paris">Thomas Paris</option>
+            <option value="Harry Kim">Harry Kim</option>
+            <option value="Charles Tucker">Charles Tucker</option>
+            <option value="Hoshi Sato">Hoshi Sato</option>
+            <option value="Ro Laren">Ro Laren</option>
+            <option value="Winn Adami">Winn Adami</option>
+          </select>
+        </label>
+        <br></br>
+        <label>
+          Select Service Level:
+          <select name="selectedServiceLevel">
+            <option value="Planning Only">Planning Only</option>
+            <option value="Managed Portfolio">Managed Portfolio</option>
+            <option value="Rebalancing Guidance">Rebalancing Guidance</option>
+          </select>
+        </label>
+        <br></br>
+        <label>
+          Enter Start Date:
+          <input type="date" name="startDate"    required="required"/>
+        </label>
+        <br></br>
+        <label>
+          Enter End Date, if any:
+          <input type="date" name="endDate"/>
+        </label>
+        <br></br>
+        <button type="submit">Add Assignment</button>
+      </form>
     </div>
   )
 };
