@@ -1,2 +1,2 @@
 Lucca Truitt & Kyle Etzelmiller <br>
-All code is original (beside REACT installational framework)
+Citations for code are included in each file
