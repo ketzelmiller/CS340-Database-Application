@@ -1,3 +1,8 @@
+// Citation for the following function:
+// Date: 2/16/2026
+// Adapted from
+// Source URL: https://www.youtube.com/watch?v=dYjdzpZv5yc and react documentation at https://react.dev
+
 function ClientsPage(){
   return(
     <div classname = 'advisorsTable' style={{ padding: "20px"}}>
@@ -11,6 +16,8 @@ function ClientsPage(){
             <th>Last Name</th>
             <th>Email</th>
             <th>Date of Birth</th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
         </thead>
 
@@ -21,6 +28,8 @@ function ClientsPage(){
             <td>Scott</td>
             <td>montgomeryscott@gmail.com</td>
             <td>1920-03-03</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>2</td>
@@ -28,6 +37,8 @@ function ClientsPage(){
             <td>Sulu</td>
             <td>hikarusulu@gmail.com</td>
             <td>1937-04-20</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>3</td>
@@ -35,6 +46,8 @@ function ClientsPage(){
             <td>Chekov</td>
             <td>pavelchekov@gmail.com</td>
             <td>1936-09-14</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>4</td>
@@ -42,6 +55,8 @@ function ClientsPage(){
             <td>Riker</td>
             <td>williamtriker@gmail.com</td>
             <td>1952-08-19</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>5</td>
@@ -49,6 +64,8 @@ function ClientsPage(){
             <td>Troi</td>
             <td>deannatroi@gmail.com</td>
             <td>1955-03-29</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>6</td>
@@ -56,6 +73,8 @@ function ClientsPage(){
             <td>La Forge</td>
             <td>geordilaforge@gmail.com</td>
             <td>1957-02-16</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>7</td>
@@ -63,6 +82,8 @@ function ClientsPage(){
             <td>Dax</td>
             <td>jadziadax@gmail.com</td>
             <td>1963-11-19</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>8</td>
@@ -70,6 +91,8 @@ function ClientsPage(){
             <td>Nerys</td>
             <td>kiranerys@gmail.com</td>
             <td>1957-07-26</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>9</td>
@@ -77,6 +100,8 @@ function ClientsPage(){
             <td>Paris</td>
             <td>tomparis@gmail.com</td>
             <td>1964-11-09</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>10</td>
@@ -84,6 +109,8 @@ function ClientsPage(){
             <td>Kim</td>
             <td>harrykim@gmail.com</td>
             <td>1968-12-15</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>11</td>
@@ -91,6 +118,8 @@ function ClientsPage(){
             <td>Tucker</td>
             <td>charlestucker@gmail.com</td>
             <td>1969-03-19</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>12</td>
@@ -98,6 +127,8 @@ function ClientsPage(){
             <td>Sato</td>
             <td>hoshisato@gmail.com</td>
             <td>1978-07-09</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>13</td>
@@ -105,6 +136,8 @@ function ClientsPage(){
             <td>Laren</td>
             <td>rolaren@gmail.com</td>
             <td>1965-01-08</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>14</td>
@@ -112,9 +145,29 @@ function ClientsPage(){
             <td>Adami</td>
             <td>winnadami@gmail.com</td>
             <td>1934-07-22</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
         </tbody>
       </table>
+
+      <hr></hr>
+
+      <h2>Insert Client</h2>
+      <form>
+        <input type="text"   name="firstName"   required="required" placeholder="Enter first name"/>
+        <br></br>
+        <input type="text"   name="lastName"    required="required" placeholder="Enter last name"/>
+        <br></br>
+        <input type="text"   name="email"       required="required" placeholder="Enter email"/>
+        <br></br>
+        <label>
+          Enter Date of Birth:
+          <input type="date"   name="dateOfBirth" required="required"/>
+        </label>
+        <br></br>
+        <button type="submit">Add Client</button>
+      </form>
     </div>
   )
 };

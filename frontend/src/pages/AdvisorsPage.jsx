@@ -1,3 +1,8 @@
+// Citation for the following function:
+// Date: 2/16/2026
+// Adapted from
+// Source URL: https://www.youtube.com/watch?v=dYjdzpZv5yc and react documentation at https://react.dev
+
 function AdvisorsPage(){
   return(
     <div classname = 'advisorsTable' style={{ padding: "20px"}}>
@@ -11,6 +16,8 @@ function AdvisorsPage(){
             <th>Last Name</th>
             <th>Email</th>
             <th>Branch</th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
         </thead>
 
@@ -21,6 +28,8 @@ function AdvisorsPage(){
             <td>Kirk</td>
             <td>jamestkirk@gmail.com</td>
             <td>Massachusetts Branch</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>2</td>
@@ -28,6 +37,8 @@ function AdvisorsPage(){
             <td>Picard</td>
             <td>jeanlucpicard@gmail.com</td>
             <td>Oregon Branch</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>3</td>
@@ -35,6 +46,8 @@ function AdvisorsPage(){
             <td>Sisko</td>
             <td>bensisko@gmail.com</td>
             <td>New York Branch</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>4</td>
@@ -42,6 +55,8 @@ function AdvisorsPage(){
             <td>Janeway</td>
             <td>kathrynjaneway@gmail.com</td>
             <td>Massachusetts Branch</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>5</td>
@@ -49,6 +64,8 @@ function AdvisorsPage(){
             <td>Archer</td>
             <td>jonathanarcher@gmail.com</td>
             <td>New York Branch</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>6</td>
@@ -56,9 +73,34 @@ function AdvisorsPage(){
             <td>Garak</td>
             <td>elimgarak@gmail.com</td>
             <td>New York Branch</td>
+            <td><button type="submit">Update</button></td>
+            <td><button type="submit">Delete</button></td>
           </tr>
         </tbody>
       </table>
+
+      <hr></hr>
+
+      <h2>Insert Advisor</h2>
+      <form>
+        <input type="text" name="firstName"   required="required" placeholder="Enter first name"/>
+        <br></br>
+        <input type="text" name="lastName"    required="required" placeholder="Enter last name"/>
+        <br></br>
+        <input type="text" name="email"       required="required" placeholder="Enter email"/>
+        <br></br>
+        <label>
+          Select Branch:
+          <select name="selectedBranch">
+            <option value="Hawaii Branch">Hawaii Branch</option>
+            <option value="Massachusetts Branch">Massachusetts Branch</option>
+            <option value="Oregon Branch">Oregon Branch</option>
+            <option value="New York Branch">New York Branch</option>
+          </select>
+        </label>
+        <br></br>
+        <button type="submit">Add Advisor</button>
+      </form>
     </div>
   )
 };
