@@ -1,8 +1,5 @@
 
 function AssignmentsPage(){
-<<<<<<< HEAD
-
-=======
   return(
     <div style={{ padding: "20px"}}>
       <h1>Adivsor-Client Assignments</h1>
@@ -254,7 +251,6 @@ function AssignmentsPage(){
       </form>
     </div>
   )
->>>>>>> 667e7d0 (Updated CSS styling, changed UI elements within pages)
 };
 
 export default AssignmentsPage;
