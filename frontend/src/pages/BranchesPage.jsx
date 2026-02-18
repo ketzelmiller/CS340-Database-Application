@@ -72,14 +72,12 @@ function branchesPage(){
             <option value="AZ">AZ</option>
             <option value="AR">AR</option>
             <option value="CA">CA</option>
-            <option value="CZ">CZ</option>
             <option value="CO">CO</option>
             <option value="CT">CT</option>
             <option value="DE">DE</option>
             <option value="DC">DC</option>
             <option value="FL">FL</option>
             <option value="GA">GA</option>
-            <option value="GU">GU</option>
             <option value="HI">HI</option>
             <option value="ID">ID</option>
             <option value="IL">IL</option>
