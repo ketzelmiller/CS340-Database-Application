@@ -16,11 +16,20 @@ function App(){
 
       <Router>
         <nav className = 'appNav'>
+<<<<<<< HEAD
           <Link to="/" style={{ padding: "12px"}}>Home</Link>
           <Link to="/advisors" style={{ padding: "12px"}}>Advisors</Link>
           <Link to="/clients" style={{ padding: "12px"}}>Clients</Link>
           <Link to ="/serviceLevels" style={{ padding: "12px"}}>Service Levels</Link>
           <Link to="/assignments">Assignments</Link>
+=======
+          <Link to="/" className='nav-buttons' style={{ padding: "12px"}}>Home</Link>
+          <Link to="/branches" className='nav-buttons' style={{ padding: "12px"}}>Branches</Link>
+          <Link to="/advisors" className='nav-buttons' style={{ padding: "12px"}}>Advisors</Link>
+          <Link to="/clients" className='nav-buttons' style={{ padding: "12px"}}>Clients</Link>
+          <Link to="/serviceLevels" className='nav-buttons' style={{ padding: "12px"}}>Service Levels</Link>
+          <Link to="/assignments" className='nav-buttons' style={{ padding: "12px"}}>Assignments</Link>
+>>>>>>> 667e7d0 (Updated CSS styling, changed UI elements within pages)
 
         </nav>
 
