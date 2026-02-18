@@ -5,10 +5,10 @@
 
 function branchesPage(){
   return(
-    <div classname = 'branchesTable' style={{ padding: "20px"}}>
+    <div className = 'branches-heading' style={{ padding: "20px"}}>
       <h1>Branches</h1>
 
-      <table border="3" style={{marginTop: "15px"}}>
+      <table className= 'branches-table' border="3" style={{marginTop: "15px"}}>
         <thead>
           <tr>
             <th>Branch ID</th>
@@ -26,32 +26,32 @@ function branchesPage(){
             <td>Hawaii Branch</td>
             <td>Honolulu</td>
             <td>HI</td>
-            <td><button type="submit">Update</button></td>
-            <td><button type="submit">Delete</button></td>
+            <td><button className='update-button' type="submit">Update</button></td>
+            <td><button className='delete-button' type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>2</td>
             <td>Massachusetts Branch</td>
             <td>Boston</td>
             <td>MA</td>
-            <td><button type="submit">Update</button></td>
-            <td><button type="submit">Delete</button></td>
+            <td><button className='update-button' type="submit">Update</button></td>
+            <td><button className='delete-button' type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>3</td>
             <td>Oregon Branch</td>
             <td>Salem</td>
             <td>OR</td>
-            <td><button type="submit">Update</button></td>
-            <td><button type="submit">Delete</button></td>
+            <td><button className='update-button' type="submit">Update</button></td>
+            <td><button className='delete-button' type="submit">Delete</button></td>
           </tr>
           <tr>
             <td>4</td>
             <td>New York Branch</td>
             <td>New York City</td>
             <td>NY</td>
-            <td><button type="submit">Update</button></td>
-            <td><button type="submit">Delete</button></td>
+            <td><button className='update-button' type="submit">Update</button></td>
+            <td><button className='delete-button' type="submit">Delete</button></td>
           </tr>
         </tbody>
       </table>
@@ -60,13 +60,13 @@ function branchesPage(){
 
       <h2>Insert Branch</h2>
       <form>
-        <input type="text"   name="branchName" required="required" placeholder="Enter branch name"/>
+        <input style={{padding:'7px'}} type="text"   name="branchName" required="required" placeholder="Enter branch name"/>
         <br></br>
-        <input type="text"   name="city"       required="required" placeholder="Enter city"/>
+        <input style={{marginTop: '7px', marginBottom: '6px', padding:'7px'}} type="text"   name="city"       required="required" placeholder="Enter city"/>
         <br></br>
-        <label>
+        <label >
           Select State:
-          <select name="selectedState">
+          <select style={{marginLeft:'7px'}} name="selectedState">
             <option value="AL">AL</option>
             <option value="AK">AK</option>
             <option value="AZ">AZ</option>
@@ -125,7 +125,7 @@ function branchesPage(){
           </select>
         </label>
         <br></br>
-        <button type="submit">Add Branch</button>
+        <button style={{marginTop: '7px', padding:'8px'}} type="submit">Add Branch</button>
       </form>
     </div>
   )

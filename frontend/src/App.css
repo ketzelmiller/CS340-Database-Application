@@ -40,3 +40,149 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Everything below this line are custom rules*/
+
+/*---Tables---*/
+
+.branches-table{
+  margin: 15px auto;
+  width: 100%;
+  margin-top: 18px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  
+}
+
+.advisor-table{
+  margin: 15px auto;
+  width: 100%;
+  margin-top: 18px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  
+}
+
+.client-table{
+    margin: 15px auto;
+  width: 100%;
+  margin-top: 18px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  
+}
+
+.service-level-table{
+    margin: 15px auto;
+  width: 100%;
+  margin-top: 18px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  
+}
+
+.assignment-table{
+  margin: 15px auto;
+  width: 100%;
+  margin-top: 18px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  
+}
+
+/*---Buttons---*/
+
+.update-button,
+.delete-button{
+  
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  
+}
+
+.delete-button{
+  background: rgba(239, 68, 68, 0.10);
+  color: white;
+}
+
+.update-button:hover,
+.delete-button:hover {
+  transform: translateY(-1px);
+}
+
+/* pressed */
+.update-button:active,
+.delete-button:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+}
+
+/* highlight whole row when hovered over */
+tbody tr:has(.delete-button:hover) {
+  background: rgba(239, 68, 68, 0.10);
+}
+
+tbody tr:has(.update-button:hover) {
+  background: #646cff1e;
+}
+
+/*---Nav buttons---*/
+.nav-buttons {
+  padding: 8px 16px;
+  border-radius: 10px;
+
+  text-decoration: none;
+  color: rgba(255,255,255,0.92);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: .45px;
+
+  
+  border: 1px solid rgba(105, 105, 105, 0.596);
+  margin-left: 10px;
+  background: rgba(255,255,255,0.06);
+
+  transition: all 0.18s ease;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.28);
+}
+
+.nav-buttons:hover{
+  color: rgb(0, 0, 0);
+  background-color: rgb(223, 223, 223);
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  background: rgba(59,130,246,0.25);
+  border-color: rgba(59,130,246,0.45);
+}
+
+/*---Forms---*/
+
+.assignment-form {
+  display: grid;
+  max-width: 420px;
+  margin: 20px auto;
+  padding: 18px;
+  
+}
+
+.assignment-form label{
+  display: flex;
+  flex-direction: column;
+  margin-top: -22px;
+}
+
+
+.assignment-form button {
+  display: block;
+  margin: 14px auto 0 auto;
+  padding: 9px 14px;
+}
