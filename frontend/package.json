@@ -6,7 +6,7 @@
   "scripts": {
     "development": "vite --port 4882",
     "build": "vite build",
-    "production": "npx forever start reactServer.cjs",
+    "production": "npx forever start -a reactServer.cjs",
     "stop_production": "npx forever stop reactServer.cjs",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
