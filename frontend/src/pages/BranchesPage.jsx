@@ -3,7 +3,7 @@
 // Adapted from
 // Source URL: https://www.youtube.com/watch?v=dYjdzpZv5yc and react documentation at https://react.dev
 
-function branchesPage(){
+function BranchesPage(){
   return(
     <div className = 'branches-heading' style={{ padding: "20px"}}>
       <h1>Branches</h1>
@@ -129,4 +129,4 @@ function branchesPage(){
   )
 };
 
-export default branchesPage;
+export default BranchesPage;

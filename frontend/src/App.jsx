@@ -24,6 +24,9 @@ function App(){
           <Link to="/serviceLevels" className='nav-buttons' style={{ padding: "12px"}}>Service Levels</Link>
           <Link to="/assignments" className='nav-buttons' style={{ padding: "12px"}}>Assignments</Link>
 
+          {/*RESET BUTTON */}
+          <button className='nav-buttons'></button>
+
         </nav>
 
         <Routes>
