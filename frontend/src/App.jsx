@@ -25,7 +25,7 @@ function App(){
           <Link to="/assignments" className='nav-buttons' style={{ padding: "12px"}}>Assignments</Link>
 
           {/*RESET BUTTON */}
-          <button className='nav-buttons'></button>
+          <button className='nav-buttons'>RESET(work in progress)</button>
 
         </nav>
 
