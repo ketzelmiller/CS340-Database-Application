@@ -6,6 +6,28 @@
 import { useState, useEffect } from "react";
 
 function AdvisorsPage(){
+
+  const [advisors, setAdvisors] = useState([]);
+  const [error, setError] = useState("");
+
+  const backend = "http://classwork.engr.oregonstate.edu:4881"
+
+  async function loadAdvisors(){
+    try{
+      setError("")
+      const res = await fetch(`${backend}/advisors`)
+      const data = await res.json()
+      setAdvisors(data)
+    }catch(err){
+      console.error(err)
+      setError("Failed to load advisors")
+    }
+  }
+
+  useEffect(() => {
+    loadAdvisors()
+  }, []);
+
   return(
     <div style={{ padding: "20px"}}>
       <h1>Advisors</h1>
@@ -24,60 +46,21 @@ function AdvisorsPage(){
         </thead>
 
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>James</td>
-            <td>Kirk</td>
-            <td>jamestkirk@gmail.com</td>
-            <td>Massachusetts Branch</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jean-Luc</td>
-            <td>Picard</td>
-            <td>jeanlucpicard@gmail.com</td>
-            <td>Oregon Branch</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Benjamin</td>
-            <td>Sisko</td>
-            <td>bensisko@gmail.com</td>
-            <td>New York Branch</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Kathryn</td>
-            <td>Janeway</td>
-            <td>kathrynjaneway@gmail.com</td>
-            <td>Massachusetts Branch</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Jonathan</td>
-            <td>Archer</td>
-            <td>jonathanarcher@gmail.com</td>
-            <td>New York Branch</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Elim</td>
-            <td>Garak</td>
-            <td>elimgarak@gmail.com</td>
-            <td>New York Branch</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
+          {advisors.map((a) => (
+            <tr key ={a.advisorID}>
+              <td>{a.advisorID}</td>
+              <td>{a.firstName}</td>
+              <td>{a.lastName}</td>
+              <td>{a.email}</td>
+              <td>{a.branchName}</td>
+              <td>
+                <button className='update-button' type="button">Update</button>
+              </td>
+              <td>
+                <button className='delete-button' type='button'>Delete</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
