@@ -53,7 +53,7 @@ app.get('/', async (req, res) => {
 
 
 // --- RESET ROUTE ---
-app.post('/reset', async (req, res) => {
+app.get('/reset', async (req, res) => {
     try{
         await db.query('CALL sp_create_database();')
         res.send({ message: 'Database reset successful' })
