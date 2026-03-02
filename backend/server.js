@@ -1,7 +1,7 @@
 
 // --------- NEW DB CONNECTOR CODE 2/24/26 ------------
 const db = require('./db-connector');
-const MY_ONID = "etzelmik";
+const MY_ONID = "truittl";
 
 
 
@@ -15,7 +15,7 @@ const app = express();
 const cors = require('cors');
 
 // Set a port in the range: 1024 < PORT < 65535
-const PORT = 4881;
+const PORT = 28542;
 
 
 // If on FLIP or classwork, use cors() middleware to allow cross-origin requests from the frontend with your port number:
@@ -66,7 +66,7 @@ app.post('/reset', async (req, res) => {
 // --- READ: BRANCHES ---
 app.get('/branches', async(req, res) => {
     try{
-        const[rows] = await db.query('SELECT branchID, branchName, city, state FROM Branches;')
+        const[rows] = await db.query('CALL sp_get_all_branches();')
         res.send(rows)
     }catch(err){
         console.error(err)
@@ -78,7 +78,7 @@ app.get('/branches', async(req, res) => {
 // --- READ: ADVISORS ---
 app.get('/advisors', async(req, res) => {
     try{
-        const[rows] = await db.query('SELECT Advisors.advisorID, Advisors.firstName, Advisors.lastName, Advisors.email, Branches.branchName FROM Advisors INNER JOIN Branches ON Advisors.branchID = Branches.branchID;')
+        const[rows] = await db.query('CALL sp_get_all_advisors();')
         res.send(rows)
     }catch(err){
         console.error(err)
@@ -89,7 +89,7 @@ app.get('/advisors', async(req, res) => {
 // --- READ: CLIENTS ---
 app.get('/clients', async(req, res) => {
     try{
-        const[rows] = await db.query('SELECT clientID, firstName, lastName, email, dateOfBirth FROM Clients;')
+        const[rows] = await db.query('CALL sp_get_all_clients();')
         res.send(rows)
     }catch(err){
         console.error(err)
@@ -100,7 +100,7 @@ app.get('/clients', async(req, res) => {
 // --- READ: SERVICE LEVELS ---
 app.get('/serviceLevels', async(req, res) => {
     try{
-        const[rows] = await db.query('SELECT serviceLevelID, serviceLevelName, description FROM ServiceLevels;')
+        const[rows] = await db.query('CALL sp_get_all_service_levels();')
         res.send(rows)
     }catch(err){
         console.error(err)
@@ -112,18 +112,7 @@ app.get('/serviceLevels', async(req, res) => {
 // --- READ: ASSIGNMENTS ---
 app.get('/assignments', async(req, res) => {
     try{
-        const[rows] = await db.query(`SELECT
-        AdvisorClientAssignments.assignmentID AS "Assignment ID",
-        CONCAT(Advisors.firstName, ' ', Advisors.lastName) AS 'Advisor Name', 
-        CONCAT(Clients.firstName, ' ', Clients.lastName) AS 'Client Name', 
-        ServiceLevels.serviceLevelName AS 'Service Level', 
-        AdvisorClientAssignments.relationshipStartDate AS 'Start Date', 
-        IFNULL(AdvisorClientAssignments.relationshipEndDate, 'Ongoing') AS 'End Date'
-        FROM AdvisorClientAssignments
-        INNER JOIN Advisors ON AdvisorClientAssignments.advisorID = Advisors.advisorID
-        INNER JOIN Clients ON AdvisorClientAssignments.clientID = Clients.ClientID
-        INNER JOIN ServiceLevels ON AdvisorClientAssignments.serviceLevelID = ServiceLevels.serviceLevelID
-        ORDER BY Advisors.firstName ASC;`)
+        const[rows] = await db.query(`CALL sp_get_all_assignments;`)
         res.send(rows)
     }catch(err){
         console.error(err)
