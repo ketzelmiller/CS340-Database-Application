@@ -1,4 +1,9 @@
-import { useState } from 'react';
+// Citation for the following onClick button code:
+// Date: 3/2/2026
+// Adapted from
+// Source URL: https://stackoverflow.com/questions/75182498/how-can-i-trigger-the-useeffect-hook-with-a-button
+
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from 'react-router-dom';
 import './App.css';
 
@@ -11,6 +16,21 @@ import BranchesPage from './pages/BranchesPage';
 
 
 function App(){
+
+  const [error, setError] = useState("");
+
+  const backend = "http://classwork.engr.oregonstate.edu:28542"
+
+  async function resetDatabase(){
+    try{
+      setError("")
+      await fetch(`${backend}/reset`)
+    }catch(err){
+      console.error(err)
+      setError("Failed to reset database")
+    }
+  }
+
   return(
     <div className ='app'>
       <h1>Financial Advisory Services Portal</h1>
@@ -25,7 +45,7 @@ function App(){
           <Link to="/assignments" className='nav-buttons' style={{ padding: "12px"}}>Assignments</Link>
 
           {/*RESET BUTTON */}
-          <button className='nav-buttons'>RESET(work in progress)</button>
+          <button className='nav-buttons' onClick={resetDatabase}>RESET</button>
 
         </nav>
 
