@@ -3,7 +3,32 @@
 // Adapted from
 // Source URL: https://www.youtube.com/watch?v=dYjdzpZv5yc and react documentation at https://react.dev
 
+import { useState, useEffect } from "react";
+
 function ServiceLevelsPage(){
+
+  const [serviceLevels, setServiceLevels] = useState([]);
+  const [error, setError] = useState("");
+
+  const backend = "http://classwork.engr.oregonstate.edu:28542"
+
+  async function loadServiceLevels(){
+    try{
+      setError("")
+      const res = await fetch(`${backend}/serviceLevels`)
+      const data = await res.json()
+      console.log("Data is: ", data)
+      setServiceLevels(data[0])
+    }catch(err){
+      console.error(err)
+      setError("Failed to load serviceLevels")
+    }
+  }
+
+  useEffect(() => {
+    loadServiceLevels()
+  }, []);
+
   return(
     <div classname = 'serviceLevelsTable' style={{ padding: "20px"}}>
       <h1>Service Levels</h1>
@@ -20,27 +45,19 @@ function ServiceLevelsPage(){
         </thead>
 
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Planning Only</td>
-            <td>Low-Level planning guidance. Advisors assist in creating estate plans, developing tax-advantaged investment vehicles, and the creation of new accounts.</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Managed Portfolio</td>
-            <td>High-Level portfolio management. Assets are controlled by the advisor who makes decisions and takes action on the clients'' behalf to maximize either rate of return, income, or protection of principal.</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Rebalancing Guidance</td>
-            <td>Intermediate-level portfolio overviews. Advisors discuss portfolio weights and assist clients in adjusting their asset mixes based on risk tolerance and prevailing market conditions.</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
+          {serviceLevels.map((a) => (
+            <tr key ={a.serviceLevelID}>
+              <td>{a.serviceLevelID}</td>
+              <td>{a.serviceLevelName}</td>
+              <td>{a.description}</td>
+              <td>
+                <button className='update-button' type="button">Update</button>
+              </td>
+              <td>
+                <button className='delete-button' type='button'>Delete</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 

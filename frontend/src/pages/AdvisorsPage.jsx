@@ -10,14 +10,15 @@ function AdvisorsPage(){
   const [advisors, setAdvisors] = useState([]);
   const [error, setError] = useState("");
 
-  const backend = "http://classwork.engr.oregonstate.edu:4881"
+  const backend = "http://classwork.engr.oregonstate.edu:28542"
 
   async function loadAdvisors(){
     try{
       setError("")
       const res = await fetch(`${backend}/advisors`)
       const data = await res.json()
-      setAdvisors(data)
+      console.log("Data is: ", data)
+      setAdvisors(data[0])
     }catch(err){
       console.error(err)
       setError("Failed to load advisors")

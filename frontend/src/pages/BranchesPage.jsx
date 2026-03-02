@@ -3,7 +3,32 @@
 // Adapted from
 // Source URL: https://www.youtube.com/watch?v=dYjdzpZv5yc and react documentation at https://react.dev
 
+import { useState, useEffect } from "react";
+
 function BranchesPage(){
+  
+  const [branches, setBranches] = useState([]);
+  const [error, setError] = useState("");
+
+  const backend = "http://classwork.engr.oregonstate.edu:28542"
+
+  async function loadBranches(){
+    try{
+      setError("")
+      const res = await fetch(`${backend}/branches`)
+      const data = await res.json()
+      console.log("Data is: ", data)
+      setBranches(data[0])
+    }catch(err){
+      console.error(err)
+      setError("Failed to load branches")
+    }
+  }
+
+  useEffect(() => {
+    loadBranches()
+  }, []);
+
   return(
     <div className = 'branches-heading' style={{ padding: "20px"}}>
       <h1>Branches</h1>
@@ -21,38 +46,20 @@ function BranchesPage(){
         </thead>
 
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Hawaii Branch</td>
-            <td>Honolulu</td>
-            <td>HI</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Massachusetts Branch</td>
-            <td>Boston</td>
-            <td>MA</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Oregon Branch</td>
-            <td>Salem</td>
-            <td>OR</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>New York Branch</td>
-            <td>New York City</td>
-            <td>NY</td>
-            <td><button className='update-button' type="submit">Update</button></td>
-            <td><button className='delete-button' type="submit">Delete</button></td>
-          </tr>
+          {branches.map((a) => (
+            <tr key ={a.branchID}>
+              <td>{a.branchID}</td>
+              <td>{a.branchName}</td>
+              <td>{a.city}</td>
+              <td>{a.state}</td>
+              <td>
+                <button className='update-button' type="button">Update</button>
+              </td>
+              <td>
+                <button className='delete-button' type='button'>Delete</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
