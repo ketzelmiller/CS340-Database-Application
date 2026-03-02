@@ -63,12 +63,12 @@
 -- Queries for Assignments
     -- Get query to list all assignments
     SELECT
-        AdvisorClientAssignments.assignmentID AS "Assignment ID",
-        CONCAT(Advisors.firstName, ' ', Advisors.lastName) AS 'Advisor Name', 
-        CONCAT(Clients.firstName, ' ', Clients.lastName) AS 'Client Name', 
-        ServiceLevels.serviceLevelName AS 'Service Level', 
-        AdvisorClientAssignments.relationshipStartDate AS 'Start Date', 
-        IFNULL(AdvisorClientAssignments.relationshipEndDate, 'Ongoing') AS 'End Date'
+        AdvisorClientAssignments.assignmentID AS "assignmentID",
+        CONCAT(Advisors.firstName, ' ', Advisors.lastName) AS 'advisorName', 
+        CONCAT(Clients.firstName, ' ', Clients.lastName) AS 'clientName', 
+        ServiceLevels.serviceLevelName AS 'serviceLevel', 
+        AdvisorClientAssignments.relationshipStartDate AS 'startDate', 
+        IFNULL(AdvisorClientAssignments.relationshipEndDate, 'Ongoing') AS 'endDate'
     FROM AdvisorClientAssignments
     INNER JOIN Advisors ON AdvisorClientAssignments.advisorID = Advisors.advisorID
     INNER JOIN Clients ON AdvisorClientAssignments.clientID = Clients.ClientID
