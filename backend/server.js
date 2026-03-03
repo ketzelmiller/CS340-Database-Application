@@ -5,7 +5,7 @@
 
 // --------- NEW DB CONNECTOR CODE 2/24/26 ------------
 const db = require('./db-connector');
-const MY_ONID = "[onid]";
+const MY_ONID = "cs340_etzelmik";
 
 
 
@@ -124,14 +124,24 @@ app.get('/assignments', async(req, res) => {
     }
 });
 
+// --- DELETE BRANCH ---
+app.delete('/branches/:branchID', async (req, res) => {
+  try {
+    const branchID = parseInt(req.params.branchID, 10);
+    if (Number.isNaN(branchID)) return res.status(400).send({ error: 'Invalid branchID' });
+
+    await db.query('CALL sp_delete_branch(?);', [branchID]);
+    return res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: 'Failed to delete branch.' });
+  }
+});
 
 // Tell express what port to listen on 
 app.listen(PORT, function () {
-    console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.');
-    
-    
-    
-    
+    console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.');   
+});
     
     
     
@@ -198,4 +208,3 @@ app.listen(PORT, function () {
         console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.');
     });
     */
-});

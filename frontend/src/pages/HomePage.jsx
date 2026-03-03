@@ -1,3 +1,7 @@
+// Citation for the following function:
+// Date: 2/16/2026
+// Adapted from: ORIGINAL
+
 function HomePage() {
     return (
         <>

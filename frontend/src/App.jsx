@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from 'react-router-dom';
 import './App.css';
 
+
 import AdvisorsPage from './pages/AdvisorsPage';
 import HomePage from './pages/HomePage';
 import ClientsPage from './pages/ClientsPage';
@@ -30,11 +31,13 @@ function App(){
     try{
       setError("")
       await fetch(`${backend}/reset`)
+      await loadBranches()
     }catch(err){
       console.error(err)
       setError("Failed to reset database")
     }
   }
+
 
   return(
     <div className ='app'>

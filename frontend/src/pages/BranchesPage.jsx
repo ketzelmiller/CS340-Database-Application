@@ -25,6 +25,14 @@ function BranchesPage(){
     }
   }
 
+  async function deleteBranch(branchID){
+    await fetch(`http://classwork.engr.oregonstate.edu:28542/branches/${branchID}`, {
+      method: 'DELETE'
+    })
+    await loadBranches(); //refresh table
+  }
+
+
   useEffect(() => {
     loadBranches()
   }, []);
@@ -56,7 +64,7 @@ function BranchesPage(){
                 <button className='update-button' type="button">Update</button>
               </td>
               <td>
-                <button className='delete-button' type='button'>Delete</button>
+                <button className='delete-button' type='button' onClick={() => deleteBranch(a.branchID)}>Delete</button>
               </td>
             </tr>
           ))}
