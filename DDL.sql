@@ -1,5 +1,11 @@
 /*Group 26 Lucca Truitt/Kyle Etzelmiller*/
 
+-- Citation for the following code:
+-- Date: 3/2/2026
+-- Adapted from Course Sample Code
+-- Source URLs: 
+-- https://canvas.oregonstate.edu/courses/2031764/pages/activity-4-creating-a-customer-object-table?module_item_id=26243385
+-- https://canvas.oregonstate.edu/courses/2031764/pages/activity-7-creating-database-intersection-tables?module_item_id=26243396
 DROP PROCEDURE IF EXISTS sp_create_database;
 DELIMITER //
 CREATE PROCEDURE sp_create_database()
