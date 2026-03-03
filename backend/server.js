@@ -7,8 +7,6 @@
 const db = require('./db-connector');
 const MY_ONID = "cs340_etzelmik";
 
-
-
 // Express library used to create a web server that will listen and respond to API calls from the frontend
 const express = require('express');
 
