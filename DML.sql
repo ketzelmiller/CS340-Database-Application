@@ -1,3 +1,13 @@
+-- Citation for the following code:
+-- Date: 3/2/2026
+-- Adapted from Various Course SQL Assignments and Activities
+-- Source URLs: 
+-- https://canvas.oregonstate.edu/courses/2031764/pages/activity-8-sql-queries-of-multiple-tables-joins?module_item_id=26243398
+-- https://canvas.oregonstate.edu/courses/2031764/pages/activity-9-retrieving-invoice-slip-data?module_item_id=26243399
+-- https://canvas.oregonstate.edu/courses/2031764/assignments/10323326?module_item_id=26243389
+-- https://canvas.oregonstate.edu/courses/2031764/assignments/10323328?module_item_id=26243401
+-- https://canvas.oregonstate.edu/courses/2031764/assignments/10323324?module_item_id=26243413
+
 -- Queries for Branches
     -- Get query to populate dropdown
     SELECT branchID, branchName FROM Branches;
