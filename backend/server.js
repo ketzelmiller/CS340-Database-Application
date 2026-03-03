@@ -1,7 +1,12 @@
 
+// Citation for the following code:
+// Date: 3/2/2026
+// Copied and Expanded from Course Code
+// Source URL: https://canvas.oregonstate.edu/courses/2031764/assignments/10323319?module_item_id=26243357
+
 // --------- NEW DB CONNECTOR CODE 2/24/26 ------------
 const db = require('./db-connector');
-const MY_ONID = "truittl";
+const MY_ONID = "[onid]";
 
 
 
