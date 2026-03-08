@@ -12,6 +12,7 @@ function ClientsPage(){
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
 
+
   async function loadClients(){
     try{
       setError("")
@@ -23,6 +24,13 @@ function ClientsPage(){
       console.error(err)
       setError("Failed to load clients")
     }
+  }
+
+  async function deleteClient(clientID){
+    await fetch(`http://classwork.engr.oregonstate.edu:28542/clients/${clientID}`, {
+      method: 'DELETE'
+    })
+    await loadClients(); //refresh table
   }
 
   useEffect(() => {
@@ -58,7 +66,7 @@ function ClientsPage(){
                 <button className='update-button' type="button">Update</button>
               </td>
               <td>
-                <button className='delete-button' type='button'>Delete</button>
+                <button className='delete-button' type='button' onClick={() => deleteClient(a.clientID)}>Delete</button>
               </td>
             </tr>
           ))}

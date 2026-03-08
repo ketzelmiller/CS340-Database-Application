@@ -12,6 +12,7 @@ function AssignmentsPage(){
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
 
+
   async function loadAssignments(){
     try{
       setError("")

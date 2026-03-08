@@ -11,6 +11,9 @@ function AdvisorsPage(){
   const [error, setError] = useState("");
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
+  //const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
+
+
 
   async function loadAdvisors(){
     try{
@@ -22,6 +25,20 @@ function AdvisorsPage(){
     }catch(err){
       console.error(err)
       setError("Failed to load advisors")
+    }
+  }
+
+
+  async function deleteAdvisor(advisorID){
+    try{
+      setError("")
+      await fetch(`${backend}/advisors/${advisorID}`, {
+        method: 'DELETE'
+      })
+      await loadAdvisors();
+    } catch(err){
+      console.error(err)
+      setError("Failed to delete advisor.")
     }
   }
 
@@ -58,7 +75,7 @@ function AdvisorsPage(){
                 <button className='update-button' type="button">Update</button>
               </td>
               <td>
-                <button className='delete-button' type='button'>Delete</button>
+                <button className='delete-button' type='button' onClick={()=> deleteAdvisor(a.advisorID)}>Delete</button>
               </td>
             </tr>
           ))}

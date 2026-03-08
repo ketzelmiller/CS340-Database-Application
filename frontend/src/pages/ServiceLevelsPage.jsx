@@ -10,7 +10,9 @@ function ServiceLevelsPage(){
   const [serviceLevels, setServiceLevels] = useState([]);
   const [error, setError] = useState("");
 
-  const backend = "http://classwork.engr.oregonstate.edu:28542"
+  //const backend = "http://classwork.engr.oregonstate.edu:28542"
+  const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
+
 
   async function loadServiceLevels(){
     try{
@@ -24,6 +26,15 @@ function ServiceLevelsPage(){
       setError("Failed to load serviceLevels")
     }
   }
+
+
+  async function deleteServiceLevel(serviceLevelID){
+    await fetch(`http://classwork.engr.oregonstate.edu:28542/serviceLevel/${serviceLevelID}`, {
+      method: 'DELETE'
+    })
+    await loadServiceLevels(); //refresh table
+  }
+
 
   useEffect(() => {
     loadServiceLevels()
@@ -54,7 +65,7 @@ function ServiceLevelsPage(){
                 <button className='update-button' type="button">Update</button>
               </td>
               <td>
-                <button className='delete-button' type='button'>Delete</button>
+                <button className='delete-button' type='button' onClick={() => deleteServiceLevel(a.serviceLevelID)}>Delete</button>
               </td>
             </tr>
           ))}
