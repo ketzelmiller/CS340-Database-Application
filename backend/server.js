@@ -17,7 +17,7 @@ const app = express();
 const cors = require('cors');
 
 // Set a port in the range: 1024 < PORT < 65535
-const PORT = 28542;
+const PORT = process.env.PORT || 28542;
 
 
 // If on FLIP or classwork, use cors() middleware to allow cross-origin requests from the frontend with your port number:
@@ -114,7 +114,7 @@ app.get('/serviceLevels', async(req, res) => {
 // --- READ: ASSIGNMENTS ---
 app.get('/assignments', async(req, res) => {
     try{
-        const[rows] = await db.query(`CALL sp_get_all_assignments;`)
+        const[rows] = await db.query(`CALL sp_get_all_assignments();`)
         res.send(rows)
     }catch(err){
         console.error(err)
@@ -135,6 +135,71 @@ app.delete('/branches/:branchID', async (req, res) => {
     return res.status(500).send({ error: 'Failed to delete branch.' });
   }
 });
+
+// --- DELETE ADVISOR ---
+app.delete('/advisors/:advisorID', async (req, res) => {
+    //DEGUBBING
+    console.log("DELETE /advisors on ID", req.params.advisorID)
+  try {
+    const advisorID = parseInt(req.params.advisorID, 10);
+    if (Number.isNaN(advisorID)) return res.status(400).send({ error: 'Invalid advisorID' });
+
+    await db.query('CALL sp_delete_advisor(?);', [advisorID]);
+    return res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: 'Failed to delete advisor.' });
+  }
+});
+
+// --- DELETE CLIENTS ---
+app.delete('/clients/:clientID', async (req, res) => {
+    //DEGUBBING
+    console.log("DELETE /clients on ID", req.params.advisorID)
+  try {
+    const clientID = parseInt(req.params.clientID, 10);
+    if (Number.isNaN(clientID)) return res.status(400).send({ error: 'Invalid clientID' });
+
+    await db.query('CALL sp_delete_client(?);', [clientID]);
+    return res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: 'Failed to delete client.' });
+  }
+});
+
+// --- DELETE SERVICE LEVEL ---
+app.delete('/serviceLevels/:serviceLevelID', async (req, res) => {
+    //DEGUBBING
+    console.log("DELETE /serviceLevel on ID", req.params.serviceLevelID)
+  try {
+    const serviceLevelID = parseInt(req.params.serviceLevelID, 10);
+    if (Number.isNaN(serviceLevelID)) return res.status(400).send({ error: 'Invalid serviceLevelID' });
+
+    await db.query('CALL sp_delete_service_level(?);', [serviceLevelID]);
+    return res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: 'Failed to delete service level.' });
+  }
+});
+
+// --- DELETE ASSIGNMENT ---
+app.delete('/assignments/:assignmentID', async (req, res) => {
+    //DEGUBBING
+    console.log("DELETE /assignment on ID", req.params.assignmentID)
+  try {
+    const assignmentID = parseInt(req.params.assignmentID, 10);
+    if (Number.isNaN(assignmentID)) return res.status(400).send({ error: 'Invalid assignmentID' });
+
+    await db.query('CALL sp_delete_assignment(?);', [assignmentID]);
+    return res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: 'Failed to delete assignment.' });
+  }
+});
+
 
 // Tell express what port to listen on 
 app.listen(PORT, function () {
