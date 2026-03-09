@@ -1,3 +1,5 @@
+-- For citations relating to the imbedded select queries, refer to DML.sql
+
 -- Citation for the following get dropdown functions:
 -- Date: 2/27/2026
 -- Adapted from
