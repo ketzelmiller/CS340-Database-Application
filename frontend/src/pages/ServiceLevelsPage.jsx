@@ -29,7 +29,7 @@ function ServiceLevelsPage(){
 
 
   async function deleteServiceLevel(serviceLevelID){
-    await fetch(`${backend}/serviceLevel/${serviceLevelID}`, {
+    await fetch(`${backend}/serviceLevels/${serviceLevelID}`, {
       method: 'DELETE'
     })
     await loadServiceLevels(); //refresh table
