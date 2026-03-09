@@ -2,6 +2,9 @@
 // Date: 3/2/2026
 // Copied and Expanded from Course Code
 // Source URL: https://canvas.oregonstate.edu/courses/2031764/assignments/10323319?module_item_id=26243357
+// Citation for calling stored procedures within routes
+// Source URL: https://www.geeksforgeeks.org/node-js/how-to-create-and-use-stored-procedures-in-mysql-with-nodejs/
+// Citation for SQL OUT parameters
 
 // --------- NEW DB CONNECTOR CODE 2/24/26 ------------
 const db = require('./db-connector');
@@ -17,7 +20,7 @@ const app = express();
 const cors = require('cors');
 
 // Set a port in the range: 1024 < PORT < 65535
-const PORT = process.env.PORT || 28542;
+const PORT = process.env.PORT || 28543;
 
 
 // If on FLIP or classwork, use cors() middleware to allow cross-origin requests from the frontend with your port number:
@@ -199,6 +202,139 @@ app.delete('/assignments/:assignmentID', async (req, res) => {
     return res.status(500).send({ error: 'Failed to delete assignment.' });
   }
 });
+
+
+// --- POST BRANCHES ---
+app.post('/branches', async(req, res) =>{
+    // DEBUGGING
+    console.log("POST /branches", req.params.branchID)
+    try{
+        const { branchName, city, state } = req.body
+
+        if(!branchName || !city || !state){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+
+        const rows = await db.query(
+            // @new_id = dummy variable to store id in the procedure
+            'CALL sp_create_branch(?, ?, ?, @new_id)', [branchName, city, state]
+        )
+
+        res.status(201).send({
+            data: rows
+        })
+
+    } catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to create branch." })
+    }
+});
+
+// --- POST ADVISORS ---
+app.post('/advisors', async(req, res) =>{
+    // DEBUGGING
+    console.log("POST /advisors", req.params.advisorID)
+    try{
+        const { firstName, lastName, email, branchID } = req.body
+
+        if(!firstName || !lastName || !email || ! branchID ){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+
+        const rows = await db.query(
+            // @new_id = dummy variable to store id in the procedure
+            'CALL sp_create_advisor(?, ?, ?, ?, @new_id)', [firstName, lastName, email, branchID]
+        )
+
+        res.status(201).send({
+            data: rows
+        })
+
+    } catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to create advisor." })
+    }
+});
+
+// --- POST CLIENTS ---
+app.post('/clients', async(req, res) =>{
+    // DEBUGGING
+    console.log("POST /clients", req.params.clientID)
+    try{
+        const { firstName, lastName, email, dateOfBirth } = req.body
+
+        if(!firstName || !lastName || !email || ! dateOfBirth ){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+
+        const rows = await db.query(
+            // @new_id = dummy variable to store id in the procedure
+            'CALL sp_create_client(?, ?, ?, ?, @new_id)', [firstName, lastName, email, dateOfBirth]
+        )
+
+        res.status(201).send({
+            data: rows
+        })
+
+    } catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to create client." })
+    }
+});
+
+// --- POST SERVICE LEVEL ---
+app.post('/serviceLevels', async(req, res) =>{
+    // DEBUGGING
+    console.log("POST /serviceLevels", req.params.serviceLevelID)
+    try{
+        const { serviceLevelName, description } = req.body
+
+        if(!serviceLevelName || !description ){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+
+        const rows = await db.query(
+            // @new_id = dummy variable to store id in the procedure
+            'CALL sp_create_service_level(?, ?, @new_id)', [serviceLevelName, description]
+        )
+
+        res.status(201).send({
+            data: rows
+        })
+
+    } catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to create service level." })
+    }
+});
+
+// --- POST ASSIGNMENTS ---
+app.post('/assignments', async(req, res) =>{
+    // DEBUGGING
+    console.log("POST /assignments", req.params.assignmentID)
+    try{
+        const { advisorID, clientID, serviceLevelID, startDate, endDate } = req.body
+
+        if(!advisorID || !clientID || !serviceLevelID || ! startDate ){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+
+        const rows = await db.query(
+            // @new_id = dummy variable to store id in the procedure
+            'CALL sp_create_client(?, ?, ?, ?, ?, @new_id)', [advisorID, clientID, serviceLevelID, startDate, endDate || null]
+        )
+
+        res.status(201).send({
+            data: rows
+        })
+
+    } catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to create assignment." })
+    }
+});
+
+
 
 
 // Tell express what port to listen on 
