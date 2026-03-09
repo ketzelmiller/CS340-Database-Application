@@ -11,7 +11,7 @@ function BranchesPage(){
   const [error, setError] = useState("");
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
-
+  //const backend = "http://localhost:3001"
 
   async function loadBranches(){
     try{
@@ -27,7 +27,7 @@ function BranchesPage(){
   }
 
   async function deleteBranch(branchID){
-    await fetch(`http://classwork.engr.oregonstate.edu:28542/branches/${branchID}`, {
+    await fetch(`${backend}/branches/${branchID}`, {
       method: 'DELETE'
     })
     await loadBranches(); //refresh table

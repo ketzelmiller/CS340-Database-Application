@@ -11,7 +11,7 @@ function ClientsPage(){
   const [error, setError] = useState("");
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
-
+   //const backend = "http://localhost:3001"
 
   async function loadClients(){
     try{
@@ -27,7 +27,7 @@ function ClientsPage(){
   }
 
   async function deleteClient(clientID){
-    await fetch(`http://classwork.engr.oregonstate.edu:28542/clients/${clientID}`, {
+    await fetch(`${backend}/clients/${clientID}`, {
       method: 'DELETE'
     })
     await loadClients(); //refresh table

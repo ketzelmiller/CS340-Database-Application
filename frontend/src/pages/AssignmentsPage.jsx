@@ -9,6 +9,11 @@ function AssignmentsPage(){
 
   const [assignments, setAssignments] = useState([]);
   const [error, setError] = useState("");
+  const [advisorID, setAdvisorID] = useState("")
+  const [clientID, setClientID] = useState("")
+  const [serviceLevelID, setServiceLevelID] = useState("")
+  const [relationshipStartDate, setRelationshipStartDate] = useState("")
+  const [relationshipEndDate, setRelationshipEndDate] = useState("")
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
    //const backend = "http://localhost:3001"
@@ -33,6 +38,41 @@ function AssignmentsPage(){
     await loadAssignments(); //refresh table
   }
 
+  async function addAssignment(e){
+    e.preventDefault();
+    try{
+      setError("")
+
+      const res = await fetch(`${backend}/assignments`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          advisorID: parseInt(advisorID),
+          clientID: parseInt(clientID),
+          serviceLevelID: parseInt(serviceLevelID),
+          relationshipStartDate,
+          relationshipEndDate: relationshipEndDate || null
+        })
+      })
+
+      if(!res.ok){
+        throw new Error("Failed to add assignment")
+      }
+
+      setAdvisorID("")
+      setClientID("")
+      setServiceLevelID("")
+      setRelationshipStartDate("")
+      setRelationshipEndDate("")
+
+      await loadAssignments()
+    }catch(err){
+      console.error(err)
+      setError("Failed to add assignment.")
+    }
+  }
+
+  
   useEffect(() => {
     loadAssignments()
   }, []);

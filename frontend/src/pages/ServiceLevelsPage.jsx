@@ -10,9 +10,9 @@ function ServiceLevelsPage(){
   const [serviceLevels, setServiceLevels] = useState([]);
   const [error, setError] = useState("");
 
-  //const backend = "http://classwork.engr.oregonstate.edu:28542"
-  const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
-
+  const backend = "http://classwork.engr.oregonstate.edu:28542"
+  //const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
+  //const backend = "http://localhost:3001"
 
   async function loadServiceLevels(){
     try{
@@ -29,7 +29,7 @@ function ServiceLevelsPage(){
 
 
   async function deleteServiceLevel(serviceLevelID){
-    await fetch(`http://classwork.engr.oregonstate.edu:28542/serviceLevel/${serviceLevelID}`, {
+    await fetch(`${backend}/serviceLevel/${serviceLevelID}`, {
       method: 'DELETE'
     })
     await loadServiceLevels(); //refresh table

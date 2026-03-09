@@ -12,7 +12,7 @@ function AdvisorsPage(){
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
   //const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
-
+  //const backend = "http://localhost:3001"
 
 
   async function loadAdvisors(){
