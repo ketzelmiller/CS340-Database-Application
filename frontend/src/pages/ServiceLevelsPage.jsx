@@ -9,6 +9,8 @@ function ServiceLevelsPage(){
 
   const [serviceLevels, setServiceLevels] = useState([]);
   const [error, setError] = useState("");
+  const [serviceLevelName, setServiceLevelName] = useState("")
+  const [description, setDescription] = useState("")
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
   //const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
@@ -33,6 +35,67 @@ function ServiceLevelsPage(){
       method: 'DELETE'
     })
     await loadServiceLevels(); //refresh table
+  }
+
+  // --- ADD ---
+  async function addServiceLevel(e){
+    e.preventDefault();
+    try{
+      setError("")
+      
+      // call the post route
+      const res = await fetch(`${backend}/serviceLevels`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        serviceLevelName: serviceLevelName,
+        description: description
+      })
+    })
+    if (!res.ok){
+      throw new Error("Failed to add service level.")
+    }
+    
+    // clear form
+    setServiceLevelName("")
+    setDescription("")
+
+    // refresh table
+    await loadServiceLevels();
+
+    }catch(err){
+      console.error(err)
+      setError("Failed to add service level.")
+    }
+  }
+
+  // --- UPDATE ---
+  async function updateServiceLevel(serviceLevelID){
+    try{
+      setError("")
+      
+      const res = await fetch(`${backend}/serviceLevels/${serviceLevelID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          serviceLevelName: serviceLevelName,
+          description: description
+        })
+      })
+
+      if(!res.ok){
+        throw new Error("Failed to update service level.")
+      }
+
+      // Refresh table and clear fields
+      await loadServiceLevels();
+      setServiceLevelName("");
+      setDescription("");
+
+    }catch(err){
+      console.log(err)
+      setError("Failed to update service level.")
+    }
   }
 
 
@@ -62,7 +125,7 @@ function ServiceLevelsPage(){
               <td>{a.serviceLevelName}</td>
               <td>{a.description}</td>
               <td>
-                <button className='update-button' type="button">Update</button>
+                <button className='update-button' type="button" onClick={() => updateServiceLevel(a.serviceLevelID)}>Update</button>
               </td>
               <td>
                 <button className='delete-button' type='button' onClick={() => deleteServiceLevel(a.serviceLevelID)}>Delete</button>
@@ -75,10 +138,26 @@ function ServiceLevelsPage(){
       <hr></hr>
 
       <h2>Insert Service Level</h2>
-      <form>
-        <input style={{marginBottom: '7px', padding:'7px'}} type="text" name="serviceLevelName"        required="required" placeholder="Enter name"/>
+      <form onSubmit={addServiceLevel}>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="serviceLevelName" 
+          required="required" 
+          placeholder="Enter name" 
+          value={serviceLevelName} 
+          onChange={(e) => setServiceLevelName(e.target.value)}
+        />
         <br></br>
-        <input style={{marginBottom: '7px', padding:'7px'}} type="text" name="serviceLevelDescription" required="required" placeholder="Enter description"/>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="serviceLevelName" 
+          required="required" 
+          placeholder="Enter description" 
+          value={description} 
+          onChange={(e) => setDescription(e.target.value)}
+        />
         <br></br>
         <button style={{marginTop: '5px', padding:'7px'}} type="submit">Add Service Level</button>
       </form>

@@ -3,12 +3,21 @@
 // Adapted from
 // Source URL: https://www.youtube.com/watch?v=dYjdzpZv5yc and react documentation at https://react.dev
 
+// Citation for date fix:
+// Date: 3/9/2026
+// Copied From
+// Source URL: https://edstem.org/us/courses/89768/discussion/7758572?answer=18012218
+
 import { useState, useEffect } from "react";
 
 function ClientsPage(){
   
   const [clients, setClients] = useState([]);
   const [error, setError] = useState("");
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [dateOfBirth, setDateOfBirth] = useState("")
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
    //const backend = "http://localhost:3001"
@@ -31,6 +40,75 @@ function ClientsPage(){
       method: 'DELETE'
     })
     await loadClients(); //refresh table
+  }
+
+  // --- ADD ---
+  async function addClient(e){
+    e.preventDefault();
+    try{
+      setError("")
+      
+      // call the post route
+      const res = await fetch(`${backend}/clients`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        dateOfBirth: dateOfBirth
+      })
+    })
+    if (!res.ok){
+      throw new Error("Failed to add client.")
+    }
+    
+    // clear form
+    setFirstName("")
+    setLastName("")
+    setEmail("")
+    setDateOfBirth("")
+
+    // refresh table
+    await loadClients();
+
+    }catch(err){
+      console.error(err)
+      setError("Failed to add client.")
+    }
+  }
+
+  // --- UPDATE ---
+  async function updateClient(ClientID){
+    try{
+      setError("")
+      
+      const res = await fetch(`${backend}/clients/${ClientID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          dateOfBirth: dateOfBirth
+        })
+      })
+
+      if(!res.ok){
+        throw new Error("Failed to update client.")
+      }
+
+      // Refresh table and clear fields
+      await loadClients();
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setDateOfBirth("");
+
+    }catch(err){
+      console.log(err)
+      setError("Failed to update client.")
+    }
   }
 
   useEffect(() => {
@@ -61,9 +139,9 @@ function ClientsPage(){
               <td>{a.firstName}</td>
               <td>{a.lastName}</td>
               <td>{a.email}</td>
-              <td>{a.dateOfBirth}</td>
+              <td>{a.dateOfBirth.substring(0, 10)}</td>
               <td>
-                <button className='update-button' type="button">Update</button>
+                <button className='update-button' type="button" onClick={() => updateClient(a.clientID)}>Update</button>
               </td>
               <td>
                 <button className='delete-button' type='button' onClick={() => deleteClient(a.clientID)}>Delete</button>
@@ -76,16 +154,47 @@ function ClientsPage(){
       <hr></hr>
 
       <h2>Insert Client</h2>
-      <form>
-        <input style={{marginBottom: '7px', padding:'7px'}} type="text"   name="firstName"   required="required" placeholder="Enter first name"/>
+      <form onSubmit={addClient}>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="firstName" 
+          required="required" 
+          placeholder="Enter first name" 
+          value={firstName} 
+          onChange={(e) => setFirstName(e.target.value)}
+        />
         <br></br>
-        <input style={{marginBottom: '7px', padding:'7px'}} type="text"   name="lastName"    required="required" placeholder="Enter last name"/>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="lastName" 
+          required="required" 
+          placeholder="Enter last name" 
+          value={lastName} 
+          onChange={(e) => setLastName(e.target.value)}
+        />
         <br></br>
-        <input style={{marginBottom: '7px', padding:'7px'}} type="text"   name="email"       required="required" placeholder="Enter email"/>
-        <br></br>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="email" 
+          required="required" 
+          placeholder="Enter email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <br></br> 
         <label>
           Enter Date of Birth:
-          <input style={{marginLeft:'8px'}} type="date"   name="dateOfBirth" required="required"/>
+          <input 
+            style={{marginLeft:'8px'}} 
+            type="date"   
+            name="dateOfBirth" 
+            required="required"
+            value={dateOfBirth} 
+            onChange={(e) => setDateOfBirth(e.target.value)}
+          />
         </label>
         <br></br>
         <button style={{marginTop: '8px', padding:'7px'}} type="submit">Add Client</button>

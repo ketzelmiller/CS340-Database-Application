@@ -9,6 +9,10 @@ function AdvisorsPage(){
 
   const [advisors, setAdvisors] = useState([]);
   const [error, setError] = useState("");
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [branch, setBranch] = useState("")
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
   //const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
@@ -42,6 +46,75 @@ function AdvisorsPage(){
     }
   }
 
+  // --- ADD ---
+  async function addAdvisor(e){
+    e.preventDefault();
+    try{
+      setError("")
+      
+      // call the post route
+      const res = await fetch(`${backend}/advisors`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        branch: branch
+      })
+    })
+    if (!res.ok){
+      throw new Error("Failed to add advisor.")
+    }
+    
+    // clear form
+    setFirstName("")
+    setLastName("")
+    setEmail("")
+    setBranch("")
+
+    // refresh table
+    await loadAdvisors();
+
+    }catch(err){
+      console.error(err)
+      setError("Failed to add advisor.")
+    }
+  }
+
+  // --- UPDATE ---
+  async function updateAdvisor(advisorID){
+    try{
+      setError("")
+      
+      const res = await fetch(`${backend}/advisors/${advisorID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          branch: branch
+        })
+      })
+
+      if(!res.ok){
+        throw new Error("Failed to update advisor.")
+      }
+
+      // Refresh table and clear fields
+      await loadAdvisors();
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setBranch("");
+
+    }catch(err){
+      console.log(err)
+      setError("Failed to update advisor.")
+    }
+  }
+
   useEffect(() => {
     loadAdvisors()
   }, []);
@@ -72,7 +145,7 @@ function AdvisorsPage(){
               <td>{a.email}</td>
               <td>{a.branchName}</td>
               <td>
-                <button className='update-button' type="button">Update</button>
+                <button className='update-button' type="button" onClick={() => updateAdvisor(a.advisorID)}>Update</button>
               </td>
               <td>
                 <button className='delete-button' type='button' onClick={()=> deleteAdvisor(a.advisorID)}>Delete</button>
@@ -85,16 +158,44 @@ function AdvisorsPage(){
       <hr></hr>
 
       <h2>Insert Advisor</h2>
-      <form>
-        <input style={{marginBottom: '7px', padding:'7px'}} type="text" name="firstName"   required="required" placeholder="Enter first name"/>
+      <form onSubmit={addAdvisor}>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="firstName" 
+          required="required" 
+          placeholder="Enter first name" 
+          value={firstName} 
+          onChange={(e) => setFirstName(e.target.value)}
+        />
         <br></br>
-        <input style={{marginBottom: '7px', padding:'7px'}} type="text" name="lastName"    required="required" placeholder="Enter last name"/>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="lastName" 
+          required="required" 
+          placeholder="Enter last name" 
+          value={lastName} 
+          onChange={(e) => setLastName(e.target.value)}
+        />
         <br></br>
-        <input style={{marginBottom: '7px', padding:'7px'}} type="text" name="email"       required="required" placeholder="Enter email"/>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="email" 
+          required="required" 
+          placeholder="Enter email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <br></br>
         <label>
           Select Branch:
-          <select style={{marginLeft:'5px'}} name="selectedBranch">
+          <select 
+            style={{marginLeft:'7px'}} 
+            name="selectedBranch"
+            value = {branch}
+            onChange={(e) => setBranch(e.target.value)}>
             <option value="Hawaii Branch">Hawaii Branch</option>
             <option value="Massachusetts Branch">Massachusetts Branch</option>
             <option value="Oregon Branch">Oregon Branch</option>

@@ -3,15 +3,20 @@
 // Adapted from
 // Source URL: https://www.youtube.com/watch?v=dYjdzpZv5yc and react documentation at https://react.dev
 
+// Citation for date fix:
+// Date: 3/9/2026
+// Copied From
+// Source URL: https://edstem.org/us/courses/89768/discussion/7758572?answer=18012218
+
 import { useState, useEffect } from "react";
 
 function AssignmentsPage(){
 
   const [assignments, setAssignments] = useState([]);
   const [error, setError] = useState("");
-  const [advisorID, setAdvisorID] = useState("")
-  const [clientID, setClientID] = useState("")
-  const [serviceLevelID, setServiceLevelID] = useState("")
+  const [advisorName, setAdvisorName] = useState("")
+  const [clientName, setClientName] = useState("")
+  const [serviceLevelName, setServiceLevelName] = useState("")
   const [relationshipStartDate, setRelationshipStartDate] = useState("")
   const [relationshipEndDate, setRelationshipEndDate] = useState("")
 
@@ -47,10 +52,10 @@ function AssignmentsPage(){
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          advisorID: parseInt(advisorID),
-          clientID: parseInt(clientID),
-          serviceLevelID: parseInt(serviceLevelID),
-          relationshipStartDate,
+          advisorName: advisorName,
+          clientName: clientName,
+          serviceLevelName: serviceLevelName,
+          relationshipStartDate: relationshipStartDate,
           relationshipEndDate: relationshipEndDate || null
         })
       })
@@ -59,16 +64,53 @@ function AssignmentsPage(){
         throw new Error("Failed to add assignment")
       }
 
-      setAdvisorID("")
-      setClientID("")
-      setServiceLevelID("")
+      setAdvisorName("")
+      setClientName("")
+      setServiceLevelName("")
       setRelationshipStartDate("")
       setRelationshipEndDate("")
 
-      await loadAssignments()
+      // refresh table
+      await loadAssignments();
+
     }catch(err){
       console.error(err)
       setError("Failed to add assignment.")
+    }
+  }
+
+  // --- UPDATE ---
+  async function updateAssignment(assignmentID){
+    try{
+      setError("")
+      
+      const res = await fetch(`${backend}/assignments/${assignmentID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          advisorName: advisorName,
+          clientName: clientName,
+          serviceLevelName: serviceLevelName,
+          relationshipStartDate: relationshipStartDate,
+          relationshipEndDate: relationshipEndDate || null
+        })
+      })
+
+      if(!res.ok){
+        throw new Error("Failed to update assignment.")
+      }
+
+      // Refresh table and clear fields
+      await loadAssignments();
+      setAdvisorName("")
+      setClientName("")
+      setServiceLevelName("")
+      setRelationshipStartDate("")
+      setRelationshipEndDate("")
+
+    }catch(err){
+      console.log(err)
+      setError("Failed to update assignment.")
     }
   }
 
@@ -102,10 +144,10 @@ function AssignmentsPage(){
               <td>{a.advisorName}</td>
               <td>{a.clientName}</td>
               <td>{a.serviceLevel}</td>
-              <td>{a.startDate}</td>
+              <td>{a.startDate.substring(0, 10)}</td>
               <td>{a.endDate}</td>
               <td>
-                <button className='update-button' type="button">Update</button>
+                <button className='update-button' type="button" onClick={() => {updateAssignment(a.assignmentID)}}>Update</button>
               </td>
               <td>
                 <button className='delete-button' type='button' onClick={() =>{deleteAssignment(a.assignmentID)}}>Delete</button>
@@ -121,11 +163,15 @@ function AssignmentsPage(){
       <form className='assignment-form' onSubmit={addAssignment}>
         <label>
           Select Advisor:
-          <select style={{marginBottom: '7px'}} name="selectedServiceLevel">
+          <select 
+            style={{marginBottom: '7px'}} 
+            name="selectedAdvisor"
+            value = {advisorName}
+            onChange={(e) => setAdvisorName(e.target.value)}>
             <option value="James Kirk">James Kirk</option>
             <option value="Jean-Luc Picard">Jean-Luc Picard</option>
             <option value="Benjamin Sisko">Benjamin Sisko</option>
-            <option value="Kathyrn Janeway">Bejamin Sisko</option>
+            <option value="Kathyrn Janeway">Kathyrn Janeway</option>
             <option value="Jonathan Archer">Jonathan Archer</option>
             <option value="Elim Garak">Elim Garak</option>
           </select>
@@ -133,7 +179,11 @@ function AssignmentsPage(){
         <br></br>
         <label>
           Select Client:
-          <select style={{marginBottom: '7px'}} name="selectedServiceLevel">
+          <select 
+            style={{marginBottom: '7px'}} 
+            name="selectedClient"
+            value = {clientName}
+            onChange={(e) => setClientName(e.target.value)}>
             <option value="Montgomery Scott">Montgomery Scott</option>
             <option value="Hikaru Sulu">Hikaru Sulu</option>
             <option value="Pavel Chekov">Pavel Chekov</option>
@@ -153,7 +203,11 @@ function AssignmentsPage(){
         <br></br>
         <label>
           Select Service Level:
-          <select style={{marginBottom: '7px'}} name="selectedServiceLevel">
+          <select 
+            style={{marginBottom: '7px'}}
+            name="selectedServiceLevel"
+            value = {serviceLevelName}
+            onChange={(e) => setServiceLevelName(e.target.value)}>
             <option value="Planning Only">Planning Only</option>
             <option value="Managed Portfolio">Managed Portfolio</option>
             <option value="Rebalancing Guidance">Rebalancing Guidance</option>
@@ -162,12 +216,25 @@ function AssignmentsPage(){
         <br></br>
         <label>
           Enter Start Date:
-          <input style={{marginBottom: '7px'}} type="date" name="startDate"    required="required"/>
+          <input 
+            style={{marginBottom: '7px'}}
+            type="date"
+            name="startDate"
+            required="required"
+            value={relationshipStartDate} 
+            onChange={(e) => setRelationshipStartDate(e.target.value)}
+          />
         </label>
         <br></br>
         <label>
           Enter End Date, if any:
-          <input style={{marginBottom: '7px'}} type="date" name="endDate"/>
+          <input 
+            style={{marginBottom: '7px'}} 
+            type="date" 
+            name="endDate"
+            value={relationshipEndDate}
+            onChange={(e) => setRelationshipEndDate(e.target.value)}
+          />
         </label>
         <br></br>
         <button style={{marginTop: '7px'}} type="submit">Add Assignment</button>
