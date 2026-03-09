@@ -11,7 +11,7 @@ function AssignmentsPage(){
   const [error, setError] = useState("");
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
-
+   //const backend = "http://localhost:3001"
 
   async function loadAssignments(){
     try{
@@ -24,6 +24,13 @@ function AssignmentsPage(){
       console.error(err)
       setError("Failed to load assignments")
     }
+  }
+
+  async function deleteAssignment(assignmentID){
+    await fetch(`${backend}/assignments/${assignmentID}`, {
+      method: 'DELETE'
+    })
+    await loadAssignments(); //refresh table
   }
 
   useEffect(() => {
@@ -61,7 +68,7 @@ function AssignmentsPage(){
                 <button className='update-button' type="button">Update</button>
               </td>
               <td>
-                <button className='delete-button' type='button'>Delete</button>
+                <button className='delete-button' type='button' onClick={() =>{deleteAssignment(a.assignmentID)}}>Delete</button>
               </td>
             </tr>
           ))}
