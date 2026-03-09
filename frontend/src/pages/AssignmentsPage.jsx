@@ -72,7 +72,7 @@ function AssignmentsPage(){
     }
   }
 
-  
+  // Reload page
   useEffect(() => {
     loadAssignments()
   }, []);
@@ -118,7 +118,7 @@ function AssignmentsPage(){
       <hr></hr>
 
       <h2>Insert Assignment</h2> 
-      <form className='assignment-form'>
+      <form className='assignment-form' onSubmit={addAssignment}>
         <label>
           Select Advisor:
           <select style={{marginBottom: '7px'}} name="selectedServiceLevel">

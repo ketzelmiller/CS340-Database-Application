@@ -12,7 +12,7 @@ const pool = mysql.createPool({
     connectionLimit: 10,
     host: 'classmysql.engr.oregonstate.edu',
     user: 'cs340_etzelmik', // example: cs340_MyOnidIsBilboBaggins
-    password: '9346', // last 4 of your OSU ID number
+    password: 'qN05AdlEajv5', // last 4 of your OSU ID number
     database: 'cs340_etzelmik' // should be same as user
 }).promise(); // This makes it so we can use async / await rather than callbacks
 

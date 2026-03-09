@@ -20,7 +20,7 @@ const app = express();
 const cors = require('cors');
 
 // Set a port in the range: 1024 < PORT < 65535
-const PORT = process.env.PORT || 28543;
+const PORT = process.env.PORT || 28542;
 
 
 // If on FLIP or classwork, use cors() middleware to allow cross-origin requests from the frontend with your port number:
@@ -128,6 +128,8 @@ app.get('/assignments', async(req, res) => {
 // --- DELETE BRANCH ---
 app.delete('/branches/:branchID', async (req, res) => {
   try {
+    // DEBUGGING
+    console.log("DELETE /branches on ID", req.params.branchID)
     const branchID = parseInt(req.params.branchID, 10);
     if (Number.isNaN(branchID)) return res.status(400).send({ error: 'Invalid branchID' });
 
@@ -207,7 +209,7 @@ app.delete('/assignments/:assignmentID', async (req, res) => {
 // --- POST BRANCHES ---
 app.post('/branches', async(req, res) =>{
     // DEBUGGING
-    console.log("POST /branches", req.params.branchID)
+    console.log("POST /branches", req.body)
     try{
         const { branchName, city, state } = req.body
 
@@ -308,6 +310,7 @@ app.post('/serviceLevels', async(req, res) =>{
     }
 });
 
+
 // --- POST ASSIGNMENTS ---
 app.post('/assignments', async(req, res) =>{
     // DEBUGGING
@@ -334,7 +337,32 @@ app.post('/assignments', async(req, res) =>{
     }
 });
 
+// --- UPDATE BRANCHES ---
+app.put('/branches/:branchID', async(req, res) => {
+    //DEBUGGING
+    console.log("UPDATE /branches/:branchID", req.params.branchID)
+    try{
+        const branchID = req.params.branchID
+        const { branchName, city, state } = req.body
 
+        if(!branchName || !city || !state){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+        
+        const rows = await db.query(
+            'CALL sp_update_branch(?, ?, ?, ?)', 
+            [branchID, branchName, city, state]
+        )
+
+        res.status(200).send({
+            data: rows
+        })
+
+    }catch(err){
+        console.log(err)
+        res.status(500).send({ error: "Failed to update branch" })
+    }
+});
 
 
 // Tell express what port to listen on 

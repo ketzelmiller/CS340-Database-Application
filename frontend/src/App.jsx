@@ -31,7 +31,10 @@ function App(){
     try{
       setError("")
       await fetch(`${backend}/reset`)
-      await loadBranches()
+      await loadBranches();
+      await loadClients();
+      await loadAssignments();
+      await loadAdvisors();
     }catch(err){
       console.error(err)
       setError("Failed to reset database")

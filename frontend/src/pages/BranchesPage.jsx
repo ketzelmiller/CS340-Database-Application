@@ -9,10 +9,14 @@ function BranchesPage(){
   
   const [branches, setBranches] = useState([]);
   const [error, setError] = useState("");
+  const [branchName, setBranchName] = useState("")
+  const [city, setCity] = useState("")
+  const [state, setState] = useState("")
 
   const backend = "http://classwork.engr.oregonstate.edu:28542"
   //const backend = "http://localhost:3001"
 
+  // --- LOAD ---
   async function loadBranches(){
     try{
       setError("")
@@ -26,6 +30,7 @@ function BranchesPage(){
     }
   }
 
+  // --- DELETE ---
   async function deleteBranch(branchID){
     await fetch(`${backend}/branches/${branchID}`, {
       method: 'DELETE'
@@ -33,6 +38,70 @@ function BranchesPage(){
     await loadBranches(); //refresh table
   }
 
+  // --- ADD ---
+  async function addBranch(e){
+    e.preventDefault();
+    try{
+      setError("")
+      
+      // call the post route
+      const res = await fetch(`${backend}/branches`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        branchName: branchName,
+        city: city,
+        state: state
+      })
+    })
+    if (!res.ok){
+      throw new Error("Failed to add branch.")
+    }
+    
+    // clear form
+    setBranchName("")
+    setCity("")
+    setState("")
+
+    // refresh table
+    await loadBranches();
+
+    }catch(err){
+      console.error(err)
+      setError("Failed to add branch.")
+    }
+  }
+
+  // --- UPDATE ---
+  async function updateBranch(branchID){
+    try{
+      setError("")
+      
+      const res = await fetch(`${backend}/branches/${branchID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          branchName: branchName,
+          city: city,
+          state: state
+        })
+      })
+
+      if(!res.ok){
+        throw new Error("Failed to update branch.")
+      }
+
+      // Refresh table and clear fields
+      await loadBranches();
+      setBranchName("");
+      setCity("")
+      setState("")
+
+    }catch(err){
+      console.log(err)
+      setError("Failed to update branch.")
+    }
+  }
 
   useEffect(() => {
     loadBranches()
@@ -54,7 +123,7 @@ function BranchesPage(){
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className='branch-form'>
           {branches.map((a) => (
             <tr key ={a.branchID}>
               <td>{a.branchID}</td>
@@ -62,7 +131,7 @@ function BranchesPage(){
               <td>{a.city}</td>
               <td>{a.state}</td>
               <td>
-                <button className='update-button' type="button">Update</button>
+                <button className='update-button' type="button" onClick={() => updateBranch(a.branchID)}>Update</button>
               </td>
               <td>
                 <button className='delete-button' type='button' onClick={() => deleteBranch(a.branchID)}>Delete</button>
@@ -75,14 +144,35 @@ function BranchesPage(){
       <hr></hr>
 
       <h2>Insert Branch</h2>
-      <form>
-        <input style={{padding:'7px'}} type="text"   name="branchName" required="required" placeholder="Enter branch name"/>
+      <form onSubmit={addBranch}>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="branchName" 
+          required="required" 
+          placeholder="Enter branch name" 
+          value={branchName} 
+          onChange={(e) => setBranchName(e.target.value)}
+        />
         <br></br>
-        <input style={{marginTop: '7px', marginBottom: '6px', padding:'7px'}} type="text"   name="city"       required="required" placeholder="Enter city"/>
+        <input 
+          style={{marginTop: '7px', marginBottom: '6px', padding:'7px'}} 
+          type="text" 
+          name="city" 
+          required="required" 
+          placeholder="Enter city" 
+          value={city} 
+          onChange={(e) => setCity(e.target.value)}
+        />
         <br></br>
-        <label >
+        <label>
           Select State:
-          <select style={{marginLeft:'7px'}} name="selectedState">
+          <select 
+            style={{marginLeft:'7px'}} 
+            name="selectedState"
+            value = {state}
+            onChange={(e) => setState(e.target.value)}>
+            <option value="">Select</option>
             <option value="AL">AL</option>
             <option value="AK">AK</option>
             <option value="AZ">AZ</option>
