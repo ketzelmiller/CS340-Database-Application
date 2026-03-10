@@ -252,15 +252,15 @@ app.post('/advisors', async(req, res) =>{
     // DEBUGGING
     console.log("POST /advisors", req.body)
     try{
-        const { firstName, lastName, email, branchID } = req.body
+        const { firstName, lastName, email, branch } = req.body
 
-        if(!firstName || !lastName || !email || ! branchID ){
+        if(!firstName || !lastName || !email || !branch ){
             return res.status(400).send({ error: "Error: Missing required fields." })
         }
 
         const rows = await db.query(
             // @new_id = dummy variable to store id in the procedure
-            'CALL sp_create_advisor(?, ?, ?, ?, @new_id)', [firstName, lastName, email, branchID]
+            'CALL sp_create_advisor(?, ?, ?, ?, @new_id)', [firstName, lastName, email, branch]
         )
 
         res.status(201).send({
@@ -276,11 +276,11 @@ app.post('/advisors', async(req, res) =>{
 // --- POST CLIENTS ---
 app.post('/clients', async(req, res) =>{
     // DEBUGGING
-    console.log("POST /clients", req.params.clientID)
+    console.log("POST /clients", req.body)
     try{
         const { firstName, lastName, email, dateOfBirth } = req.body
 
-        if(!firstName || !lastName || !email || ! dateOfBirth ){
+        if(!firstName || !lastName || !email || !dateOfBirth ){
             return res.status(400).send({ error: "Error: Missing required fields." })
         }
 
@@ -302,7 +302,7 @@ app.post('/clients', async(req, res) =>{
 // --- POST SERVICE LEVEL ---
 app.post('/serviceLevels', async(req, res) =>{
     // DEBUGGING
-    console.log("POST /serviceLevels", req.params.serviceLevelID)
+    console.log("POST /serviceLevels", req.body)
     try{
         const { serviceLevelName, description } = req.body
 
@@ -329,17 +329,21 @@ app.post('/serviceLevels', async(req, res) =>{
 // --- POST ASSIGNMENTS ---
 app.post('/assignments', async(req, res) =>{
     // DEBUGGING
-    console.log("POST /assignments", req.params.assignmentID)
+    console.log("POST /assignments", req.body)
     try{
-        const { advisorID, clientID, serviceLevelID, startDate, endDate } = req.body
+        const { advisorName, clientName, serviceLevelName, relationshipStartDate, relationshipEndDate } = req.body
 
-        if(!advisorID || !clientID || !serviceLevelID || ! startDate ){
+        if(!advisorName || !clientName || !serviceLevelName || !relationshipStartDate ){
             return res.status(400).send({ error: "Error: Missing required fields." })
         }
 
         const rows = await db.query(
             // @new_id = dummy variable to store id in the procedure
+<<<<<<< HEAD
             'CALL sp_create_assignment(?, ?, ?, ?, ?, @new_id)', [advisorID, clientID, serviceLevelID, startDate, endDate || null]
+=======
+            'CALL sp_create_assignment(?, ?, ?, ?, ?, @new_id)', [advisorName, clientName, serviceLevelName, relationshipStartDate, relationshipEndDate || null]
+>>>>>>> 5310207b18fcba90b0e448d7a6274acf289af21b
         )
 
         res.status(201).send({
@@ -379,75 +383,118 @@ app.put('/branches/:branchID', async(req, res) => {
     }
 });
 
+// --- UPDATE ADVISORS ---
+app.put('/advisors/:advisorID', async(req, res) => {
+    //DEBUGGING
+    console.log("UPDATE /advisors/:advisorID", req.params.advisorID)
+    try{
+        const advisorID = req.params.advisorID
+        const { firstName, lastName, email, branch } = req.body
+
+        if(!firstName || !lastName || !email || !branch){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+        
+        const rows = await db.query(
+            'CALL sp_update_advisor(?, ?, ?, ?, ?)', 
+            [advisorID, firstName, lastName, email, branch]
+        )
+
+        res.status(200).send({
+            data: rows
+        })
+
+    }catch(err){
+        console.log(err)
+        res.status(500).send({ error: "Failed to update advisor" })
+    }
+});
+
+// --- UPDATE CLIENTS ---
+app.put('/clients/:clientID', async(req, res) => {
+    //DEBUGGING
+    console.log("UPDATE /clients/:clientID", req.params.clientID)
+    try{
+        const clientID = req.params.clientID
+        const { firstName, lastName, email, dateOfBirth } = req.body
+
+        if(!firstName || !lastName || !email || !dateOfBirth){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+        
+        const rows = await db.query(
+            'CALL sp_update_client(?, ?, ?, ?, ?)', 
+            [clientID, firstName, lastName, email, dateOfBirth]
+        )
+
+        res.status(200).send({
+            data: rows
+        })
+
+    }catch(err){
+        console.log(err)
+        res.status(500).send({ error: "Failed to update client" })
+    }
+});
+
+// --- UPDATE SERVICE LEVELS ---
+app.put('/serviceLevels/:serviceLevelID', async(req, res) => {
+    //DEBUGGING
+    console.log("UPDATE /serviceLevels/:serviceLevelID", req.params.serviceLevelID)
+    try{
+        const serviceLevelID = req.params.serviceLevelID
+        const { serviceLevelName, description } = req.body
+
+        if(!serviceLevelName || !description){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+        
+        const rows = await db.query(
+            'CALL sp_update_service_level(?, ?, ?)', 
+            [serviceLevelID, serviceLevelName, description]
+        )
+
+        res.status(200).send({
+            data: rows
+        })
+
+    }catch(err){
+        console.log(err)
+        res.status(500).send({ error: "Failed to update service level" })
+    }
+});
+
+// --- UPDATE ASSIGNMENT ---
+app.put('/assignments/:assignmentID', async(req, res) => {
+    //DEBUGGING
+    console.log("UPDATE /assignments/:assignmentID", req.params.assignmentID)
+    console.log("UPDATE /assignments/:assignmentID", req.body)
+    try{
+        const assignmentID = req.params.assignmentID
+        const {advisorName, clientName, serviceLevelName, relationshipStartDate, relationshipEndDate} = req.body
+
+        if(!advisorName || !clientName || !serviceLevelName || !relationshipStartDate){
+            return res.status(400).send({ error: "Error: Missing required fields." })
+        }
+        
+        const rows = await db.query(
+            'CALL sp_update_assignment(?, ?, ?, ?, ?, ?)', 
+            [assignmentID, advisorName, clientName, serviceLevelName, relationshipStartDate, relationshipEndDate || null]
+        )
+
+        res.status(200).send({
+            data: rows
+        })
+
+    }catch(err){
+        console.log(err)
+        res.status(500).send({ error: "Failed to update assignment" })
+    }
+});
+
 
 
 // Tell express what port to listen on 
 app.listen(PORT, function () {
     console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.');   
 });
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-    /* ----------------- OLD CODE --------------------
-    // ########################################
-    // ########## SETUP
-    
-    // Database
-    const db = require('./database/db-connector');
-    
-    // Express
-    const express = require('express');
-    const app = express();
-    
-    // Middleware
-    const cors = require('cors');
-    app.use(cors({ credentials: true, origin: "*" }));
-    app.use(express.json()); // this is needed for post requests
-    
-    
-    const PORT = 4881;
-    
-    // ########################################
-    // ########## ROUTE HANDLERS
-    
-    // READ ROUTES
-    app.get('/bsg-people', async (req, res) => {
-        try {
-            // Create and execute our queries
-            // In query1, we use a JOIN clause to display the names of the homeworlds
-            const query1 = `SELECT bsg_people.id, bsg_people.fname, bsg_people.lname, \
-                bsg_planets.name AS 'homeworld', bsg_people.age FROM bsg_people \
-                LEFT JOIN bsg_planets ON bsg_people.homeworld = bsg_planets.id;`;
-            const query2 = 'SELECT * FROM bsg_planets;';
-            const [people] = await db.query(query1);
-            const [homeworlds] = await db.query(query2);
-        
-            res.status(200).json({ people, homeworlds });  // Send the results to the frontend
-    
-        } catch (error) {
-            console.error("Error executing queries:", error);
-            // Send a generic error message to the browser
-            res.status(500).send("An error occurred while executing the database queries.");
-        }
-        
-    });
-    
-    // ########################################
-    // ########## LISTENER
-    
-    app.listen(PORT, function () {
-        console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.');
-    });
-    */

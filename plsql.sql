@@ -93,9 +93,9 @@ CREATE PROCEDURE sp_get_all_advisors(
 
 )
 BEGIN
-    SELECT Advisors.advisorID, Advisors.firstName, Advisors.lastName, Advisors.email, Branches.branchName 
+    SELECT Advisors.advisorID, Advisors.firstName, Advisors.lastName, Advisors.email, IFNULL(Branches.branchName, 'No Branch') as branchName
     FROM Advisors 
-    INNER JOIN Branches ON Advisors.branchID = Branches.branchID;
+    LEFT JOIN Branches ON Advisors.branchID = Branches.branchID;
 
     -- Example of how to get all data from advisors:
         -- CALL sp_get_all_advisors();
@@ -194,11 +194,11 @@ CREATE PROCEDURE sp_create_advisor(
     IN p_firstName VARCHAR(255), 
     IN p_lastName VARCHAR(255), 
     IN p_email VARCHAR(255), 
-    IN p_branchID INT,
+    IN p_branchName VARCHAR(255),
     OUT p_advisorID INT)
 BEGIN
     INSERT INTO Advisors (firstName, lastName, email, branchID) 
-    VALUES (p_firstName, p_lastName, p_email, p_branchID);
+    VALUES (p_firstName, p_lastName, p_email, (SELECT BranchID from Branches WHERE branchName = p_branchName));
 
     -- Store the ID of the last inserted row
     SELECT LAST_INSERT_ID() into p_advisorID;
@@ -206,7 +206,7 @@ BEGIN
     SELECT LAST_INSERT_ID() AS 'new_id';
 
     -- Example of how to get the ID of the newly created advisor:
-        -- CALL sp_create_advisor('Lucca', 'Truitt', 'lt@gmail.com', 1, @new_id);
+        -- CALL sp_create_advisor('Lucca', 'Truitt', 'lt@gmail.com', Oregon Branch, @new_id);
         -- SELECT @new_id AS 'New Advisor ID';
 END //
 DELIMITER ;
@@ -261,15 +261,21 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS sp_create_assignment;
 DELIMITER //
 CREATE PROCEDURE sp_create_assignment(
-    IN p_advisorID INT,
-    IN p_clientID INT,
-    IN p_serviceLevelID INT,
+    IN p_advisorName VARCHAR(255),
+    IN p_clientName VARCHAR(255),
+    IN p_serviceLevelName VARCHAR(255),
     IN p_relationshipStartDate DATE,
     IN p_relationshipEndDate DATE,
     OUT p_assignmentID INT)
 BEGIN
     INSERT INTO AdvisorClientAssignments (advisorID, clientID, serviceLevelID, relationshipStartDate, relationshipEndDate) 
-    VALUES (p_advisorID, p_clientID, p_serviceLevelID, p_relationshipStartDate, p_relationshipEndDate);
+    VALUES (
+        (SELECT advisorID from Advisors WHERE CONCAT(firstName, ' ', lastName) = p_advisorName), 
+        (SELECT clientID from Clients WHERE CONCAT(firstName, ' ', lastName) = p_clientName), 
+        (SELECT serviceLevelID from ServiceLevels WHERE serviceLevelName = p_serviceLevelName), 
+        p_relationshipStartDate, 
+        p_relationshipEndDate
+    );
 
     -- Store the ID of the last inserted row
     SELECT LAST_INSERT_ID() into p_assignmentID;
@@ -316,14 +322,14 @@ CREATE PROCEDURE sp_update_advisor(
     IN p_firstName VARCHAR(255), 
     IN p_lastName VARCHAR(255), 
     IN p_email VARCHAR(255), 
-    IN p_branchID INT)
+    IN p_branchName VARCHAR(255))
 BEGIN
     UPDATE Advisors 
-    SET firstName = p_firstName, lastName = p_lastName, email = p_email, branchID = p_branchID
+    SET firstName = p_firstName, lastName = p_lastName, email = p_email, branchID = (SELECT BranchID from Branches WHERE branchName = p_branchName)
     WHERE advisorID = p_advisorID;
 
     -- Example of how to update a specific advisor:
-        -- CALL sp_update_advisor(3, 'Gul', 'Dukat', 'guldukat@gmail.com', 3);
+        -- CALL sp_update_advisor(3, 'Gul', 'Dukat', 'guldukat@gmail.com', Hawaii Branch);
 END //
 DELIMITER ;
 
@@ -369,18 +375,23 @@ DROP PROCEDURE IF EXISTS sp_update_assignment;
 DELIMITER //
 CREATE PROCEDURE sp_update_assignment(
     IN p_assignmentID INT,
-    IN p_advisorID INT,
-    IN p_clientID INT,
-    IN p_serviceLevelID INT,
+    IN p_advisorName VARCHAR(255),
+    IN p_clientName VARCHAR(255),
+    IN p_serviceLevelName VARCHAR(255),
     IN p_relationshipStartDate DATE,
     IN p_relationshipEndDate DATE)
 BEGIN
     UPDATE AdvisorClientAssignments 
-    SET advisorID = p_advisorID, clientID = p_clientID, serviceLevelID = p_serviceLevelID, relationshipStartDate = p_relationshipStartDate, relationshipEndDate = p_relationshipEndDate
+    SET 
+        advisorID = (SELECT advisorID from Advisors WHERE CONCAT(firstName, ' ', lastName) = p_advisorName),
+        clientID = (SELECT clientID from Clients WHERE CONCAT(firstName, ' ', lastName) = p_clientName), 
+        serviceLevelID = (SELECT serviceLevelID from ServiceLevels WHERE serviceLevelName = p_serviceLevelName),
+        relationshipStartDate = p_relationshipStartDate,
+        relationshipEndDate = p_relationshipEndDate
     WHERE assignmentID = p_assignmentID;
 
     -- Example of how to update a specific assignment:
-        -- CALL sp_update_assignment(1, 1, 1, 2, 20250127, NULL);
+        -- CALL sp_update_assignment(Elim Garak, Lucca Truitt, Rebalancing Guidance, 2, 20250127, NULL);
 END //
 DELIMITER ;
 

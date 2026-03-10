@@ -86,6 +86,75 @@ function AdvisorsPage(){
     }
   }
 
+  // --- ADD ---
+  async function addAdvisor(e){
+    e.preventDefault();
+    try{
+      setError("")
+      
+      // call the post route
+      const res = await fetch(`${backend}/advisors`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        branch: branch
+      })
+    })
+    if (!res.ok){
+      throw new Error("Failed to add advisor.")
+    }
+    
+    // clear form
+    setFirstName("")
+    setLastName("")
+    setEmail("")
+    setBranch("")
+
+    // refresh table
+    await loadAdvisors();
+
+    }catch(err){
+      console.error(err)
+      setError("Failed to add advisor.")
+    }
+  }
+
+  // --- UPDATE ---
+  async function updateAdvisor(advisorID){
+    try{
+      setError("")
+      
+      const res = await fetch(`${backend}/advisors/${advisorID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          branch: branch
+        })
+      })
+
+      if(!res.ok){
+        throw new Error("Failed to update advisor.")
+      }
+
+      // Refresh table and clear fields
+      await loadAdvisors();
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setBranch("");
+
+    }catch(err){
+      console.log(err)
+      setError("Failed to update advisor.")
+    }
+  }
+
   useEffect(() => {
     loadBranchDropdown()
     loadAdvisors()
@@ -117,7 +186,7 @@ function AdvisorsPage(){
               <td>{a.email}</td>
               <td>{a.branchName}</td>
               <td>
-                <button className='update-button' type="button">Update</button>
+                <button className='update-button' type="button" onClick={() => updateAdvisor(a.advisorID)}>Update</button>
               </td>
               <td>
                 <button className='delete-button' type='button' onClick={()=> deleteAdvisor(a.advisorID)}>Delete</button>
