@@ -20,8 +20,8 @@ const app = express();
 const cors = require('cors');
 
 // Set a port in the range: 1024 < PORT < 65535
-const PORT = process.env.PORT || 28542;
-
+//const PORT = process.env.PORT || 28542;
+const PORT = "http://localhost:3001"
 
 // If on FLIP or classwork, use cors() middleware to allow cross-origin requests from the frontend with your port number:
 // EX (local): http://localhost:5173
@@ -90,6 +90,19 @@ app.get('/advisors', async(req, res) => {
         res.status(500).send({ error: 'Failed to fetch advisors.' })
     }
 });
+
+
+// ---------- DROPDOWNS ----------
+app.get('/dropdown/branches', async(req, res) => {
+    try{
+        const [rows] = await db.query('CALL sp_get_dropdown_branches();')
+        res.send(rows[0])
+    }catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to fetch branch dropdown." })
+    }
+});
+
 
 // --- READ: CLIENTS ---
 app.get('/clients', async(req, res) => {
@@ -160,7 +173,7 @@ app.delete('/advisors/:advisorID', async (req, res) => {
 // --- DELETE CLIENTS ---
 app.delete('/clients/:clientID', async (req, res) => {
     //DEGUBBING
-    console.log("DELETE /clients on ID", req.params.advisorID)
+    console.log("DELETE /clients on ID", req.params.clientID)
   try {
     const clientID = parseInt(req.params.clientID, 10);
     if (Number.isNaN(clientID)) return res.status(400).send({ error: 'Invalid clientID' });
@@ -195,7 +208,9 @@ app.delete('/assignments/:assignmentID', async (req, res) => {
     console.log("DELETE /assignment on ID", req.params.assignmentID)
   try {
     const assignmentID = parseInt(req.params.assignmentID, 10);
-    if (Number.isNaN(assignmentID)) return res.status(400).send({ error: 'Invalid assignmentID' });
+    if (Number.isNaN(assignmentID)){
+      return res.status(400).send({ error: 'Invalid assignmentID' });  
+    } 
 
     await db.query('CALL sp_delete_assignment(?);', [assignmentID]);
     return res.sendStatus(204);
@@ -235,7 +250,7 @@ app.post('/branches', async(req, res) =>{
 // --- POST ADVISORS ---
 app.post('/advisors', async(req, res) =>{
     // DEBUGGING
-    console.log("POST /advisors", req.params.advisorID)
+    console.log("POST /advisors", req.body)
     try{
         const { firstName, lastName, email, branchID } = req.body
 
@@ -324,7 +339,7 @@ app.post('/assignments', async(req, res) =>{
 
         const rows = await db.query(
             // @new_id = dummy variable to store id in the procedure
-            'CALL sp_create_client(?, ?, ?, ?, ?, @new_id)', [advisorID, clientID, serviceLevelID, startDate, endDate || null]
+            'CALL sp_create_assignment(?, ?, ?, ?, ?, @new_id)', [advisorID, clientID, serviceLevelID, startDate, endDate || null]
         )
 
         res.status(201).send({
@@ -363,6 +378,7 @@ app.put('/branches/:branchID', async(req, res) => {
         res.status(500).send({ error: "Failed to update branch" })
     }
 });
+
 
 
 // Tell express what port to listen on 
