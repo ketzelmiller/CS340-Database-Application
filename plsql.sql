@@ -93,9 +93,9 @@ CREATE PROCEDURE sp_get_all_advisors(
 
 )
 BEGIN
-    SELECT Advisors.advisorID, Advisors.firstName, Advisors.lastName, Advisors.email, Branches.branchName 
+    SELECT Advisors.advisorID, Advisors.firstName, Advisors.lastName, Advisors.email, IFNULL(Branches.branchName, 'No Branch') as branchName
     FROM Advisors 
-    INNER JOIN Branches ON Advisors.branchID = Branches.branchID;
+    LEFT JOIN Branches ON Advisors.branchID = Branches.branchID;
 
     -- Example of how to get all data from advisors:
         -- CALL sp_get_all_advisors();
