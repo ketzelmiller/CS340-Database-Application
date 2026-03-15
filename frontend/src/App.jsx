@@ -8,6 +8,11 @@
 // Adapted from
 // Source URL: https://stackoverflow.com/questions/75182498/how-can-i-trigger-the-useeffect-hook-with-a-button
 
+// Citation for refresh fix (window.location.reload()):
+// Date: 3/15/2026
+// Copied From
+// Source URL: https://edstem.org/us/courses/89768/discussion/7758572?answer=18012218
+
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from 'react-router-dom';
 import './App.css';
@@ -31,10 +36,7 @@ function App(){
     try{
       setError("")
       await fetch(`${backend}/reset`)
-      await loadBranches();
-      await loadClients();
-      await loadAssignments();
-      await loadAdvisors();
+      window.location.reload();
     }catch(err){
       console.error(err)
       setError("Failed to reset database")
@@ -44,7 +46,7 @@ function App(){
 
   return(
     <div className ='app'>
-      <h1>Financial Advisory Services Portal</h1>
+      <h1>Financial Advisory Services Portal - Local Version</h1>
 
       <Router>
         <nav className = 'appNav'>
