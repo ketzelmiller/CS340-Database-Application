@@ -13,7 +13,7 @@ function BranchesPage(){
   const [city, setCity] = useState("")
   const [state, setState] = useState("")
 
-  const backend = "http://classwork.engr.oregonstate.edu:28542"
+  const backend = "http://classwork.engr.oregonstate.edu:6044"
   //const backend = "http://localhost:3001"
 
   // --- LOAD ---

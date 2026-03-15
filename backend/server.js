@@ -8,7 +8,7 @@
 
 // --------- NEW DB CONNECTOR CODE 2/24/26 ------------
 const db = require('./db-connector');
-const MY_ONID = "cs340_etzelmik";
+const MY_ONID = "truittl";
 
 // Express library used to create a web server that will listen and respond to API calls from the frontend
 const express = require('express');
@@ -20,16 +20,16 @@ const app = express();
 const cors = require('cors');
 
 // Set a port in the range: 1024 < PORT < 65535
-//const PORT = process.env.PORT || 28542;
-const PORT = "http://localhost:3001"
+const PORT = 6044;
+
 
 // If on FLIP or classwork, use cors() middleware to allow cross-origin requests from the frontend with your port number:
 // EX (local): http://localhost:5173
 // EX (FLIP/classwork) http://classwork.engr.oregonstate.edu:5173
 app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests, good thing to know
-
-// --- ROUTE HANDLER --- 
+            
+// Route handler 
 app.get('/', async (req, res) => {
     try {
         // Define queries
@@ -55,7 +55,6 @@ app.get('/', async (req, res) => {
         res.status(500).send("An error occurred while executing the database queries.");
     }
 });
-
 
 // --- RESET ROUTE ---
 app.get('/reset', async (req, res) => {
@@ -90,19 +89,6 @@ app.get('/advisors', async(req, res) => {
         res.status(500).send({ error: 'Failed to fetch advisors.' })
     }
 });
-
-
-// ---------- DROPDOWNS ----------
-app.get('/dropdown/branches', async(req, res) => {
-    try{
-        const [rows] = await db.query('CALL sp_get_dropdown_branches();')
-        res.send(rows[0])
-    }catch(err){
-        console.error(err)
-        res.status(500).send({ error: "Failed to fetch branch dropdown." })
-    }
-});
-
 
 // --- READ: CLIENTS ---
 app.get('/clients', async(req, res) => {
@@ -173,7 +159,7 @@ app.delete('/advisors/:advisorID', async (req, res) => {
 // --- DELETE CLIENTS ---
 app.delete('/clients/:clientID', async (req, res) => {
     //DEGUBBING
-    console.log("DELETE /clients on ID", req.params.clientID)
+    console.log("DELETE /clients on ID", req.params.advisorID)
   try {
     const clientID = parseInt(req.params.clientID, 10);
     if (Number.isNaN(clientID)) return res.status(400).send({ error: 'Invalid clientID' });
@@ -208,9 +194,7 @@ app.delete('/assignments/:assignmentID', async (req, res) => {
     console.log("DELETE /assignment on ID", req.params.assignmentID)
   try {
     const assignmentID = parseInt(req.params.assignmentID, 10);
-    if (Number.isNaN(assignmentID)){
-      return res.status(400).send({ error: 'Invalid assignmentID' });  
-    } 
+    if (Number.isNaN(assignmentID)) return res.status(400).send({ error: 'Invalid assignmentID' });
 
     await db.query('CALL sp_delete_assignment(?);', [assignmentID]);
     return res.sendStatus(204);
@@ -219,7 +203,6 @@ app.delete('/assignments/:assignmentID', async (req, res) => {
     return res.status(500).send({ error: 'Failed to delete assignment.' });
   }
 });
-
 
 // --- POST BRANCHES ---
 app.post('/branches', async(req, res) =>{
@@ -339,11 +322,7 @@ app.post('/assignments', async(req, res) =>{
 
         const rows = await db.query(
             // @new_id = dummy variable to store id in the procedure
-<<<<<<< HEAD
-            'CALL sp_create_assignment(?, ?, ?, ?, ?, @new_id)', [advisorID, clientID, serviceLevelID, startDate, endDate || null]
-=======
             'CALL sp_create_assignment(?, ?, ?, ?, ?, @new_id)', [advisorName, clientName, serviceLevelName, relationshipStartDate, relationshipEndDate || null]
->>>>>>> 5310207b18fcba90b0e448d7a6274acf289af21b
         )
 
         res.status(201).send({
@@ -492,9 +471,7 @@ app.put('/assignments/:assignmentID', async(req, res) => {
     }
 });
 
-
-
 // Tell express what port to listen on 
 app.listen(PORT, function () {
-    console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.');   
+    console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.');
 });

@@ -5,16 +5,17 @@
   "main": "index.js",
   "scripts": {
     "development": "nodemon server.js",
-    "production": "npx forever start -a server.js",
+    "production": "npx forever start server.js",
     "stop_production": "npx forever stop server.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "forever": "^1.0.1",
-    "mysql2": "^3.16.3",
-    "nodemon": "^3.1.11"
+    "forever": "^4.0.3",
+    "mysql2": "^3.19.1",
+    "nodemon": "^3.1.14"
   }
 }

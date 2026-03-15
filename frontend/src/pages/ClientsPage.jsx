@@ -19,7 +19,7 @@ function ClientsPage(){
   const [email, setEmail] = useState("")
   const [dateOfBirth, setDateOfBirth] = useState("")
 
-  const backend = "http://classwork.engr.oregonstate.edu:28542"
+  const backend = "http://classwork.engr.oregonstate.edu:6044"
    //const backend = "http://localhost:3001"
 
   async function loadClients(){

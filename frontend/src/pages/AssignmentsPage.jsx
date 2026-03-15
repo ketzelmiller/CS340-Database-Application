@@ -20,7 +20,7 @@ function AssignmentsPage(){
   const [relationshipStartDate, setRelationshipStartDate] = useState("")
   const [relationshipEndDate, setRelationshipEndDate] = useState("")
 
-  const backend = "http://classwork.engr.oregonstate.edu:28542"
+  const backend = "http://classwork.engr.oregonstate.edu:6044"
    //const backend = "http://localhost:3001"
 
   async function loadAssignments(){
@@ -171,7 +171,7 @@ function AssignmentsPage(){
             <option value="James Kirk">James Kirk</option>
             <option value="Jean-Luc Picard">Jean-Luc Picard</option>
             <option value="Benjamin Sisko">Benjamin Sisko</option>
-            <option value="Kathyrn Janeway">Kathyrn Janeway</option>
+            <option value="Kathryn Janeway">Kathryn Janeway</option>
             <option value="Jonathan Archer">Jonathan Archer</option>
             <option value="Elim Garak">Elim Garak</option>
           </select>
