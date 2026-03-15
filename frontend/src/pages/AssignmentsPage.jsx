@@ -20,7 +20,11 @@ function AssignmentsPage(){
   const [relationshipStartDate, setRelationshipStartDate] = useState("")
   const [relationshipEndDate, setRelationshipEndDate] = useState("")
 
-  const backend = "http://classwork.engr.oregonstate.edu:6044"
+  const [advisors, setAdvisors] = useState([])
+  const [clients, setClients] = useState([])
+  const [serviceLevels, setServiceLevels] = useState([])
+
+  const backend = "http://classwork.engr.oregonstate.edu:6098"
    //const backend = "http://localhost:3001"
 
   async function loadAssignments(){
@@ -114,9 +118,29 @@ function AssignmentsPage(){
     }
   }
 
+  // --- GET DROPDOWNS ---
+  async function loadAdvisorDropdown(){
+    const res = await fetch(`${backend}/dropdown/advisors`)
+    const data = await res.json()
+    setAdvisors(Array.isArray(data[0]) ? data[0] : data)
+  }
+  async function loadClientDropdown(){
+    const res = await fetch(`${backend}/dropdown/clients`)
+    const data = await res.json()
+    setClients(Array.isArray(data[0]) ? data[0] : data)
+  }
+  async function loadServiceLevelDropdown(){
+    const res = await fetch(`${backend}/dropdown/serviceLevels`)
+    const data = await res.json()
+    setServiceLevels(Array.isArray(data[0]) ? data[0] : data)
+  }
+
   // Reload page
   useEffect(() => {
     loadAssignments()
+    loadAdvisorDropdown()
+    loadClientDropdown()
+    loadServiceLevelDropdown()
   }, []);
 
   return(
@@ -168,12 +192,12 @@ function AssignmentsPage(){
             name="selectedAdvisor"
             value = {advisorName}
             onChange={(e) => setAdvisorName(e.target.value)}>
-            <option value="James Kirk">James Kirk</option>
-            <option value="Jean-Luc Picard">Jean-Luc Picard</option>
-            <option value="Benjamin Sisko">Benjamin Sisko</option>
-            <option value="Kathryn Janeway">Kathryn Janeway</option>
-            <option value="Jonathan Archer">Jonathan Archer</option>
-            <option value="Elim Garak">Elim Garak</option>
+            <option value="">Select</option>
+            {advisors.map((a) => (
+              <option key={a.advisorID} value={a.advisorName}>
+                {a.advisorName}
+              </option>
+            ))}
           </select>
         </label>
         <br></br>
@@ -184,20 +208,12 @@ function AssignmentsPage(){
             name="selectedClient"
             value = {clientName}
             onChange={(e) => setClientName(e.target.value)}>
-            <option value="Montgomery Scott">Montgomery Scott</option>
-            <option value="Hikaru Sulu">Hikaru Sulu</option>
-            <option value="Pavel Chekov">Pavel Chekov</option>
-            <option value="William Riker">William Riker</option>
-            <option value="Deanna Troi">Deanna Troi</option>
-            <option value="Geordi La Forge">Geordi La Forge</option>
-            <option value="Jadzia Dax">Jadzia Dax</option>
-            <option value="Kira Nerys">Kira Nerys</option>
-            <option value="Thomas Paris">Thomas Paris</option>
-            <option value="Harry Kim">Harry Kim</option>
-            <option value="Charles Tucker">Charles Tucker</option>
-            <option value="Hoshi Sato">Hoshi Sato</option>
-            <option value="Ro Laren">Ro Laren</option>
-            <option value="Winn Adami">Winn Adami</option>
+            <option value="">Select</option>
+            {clients.map((c) => (
+              <option key={c.clientID} value={c.clientName}>
+                {c.clientName}
+              </option>
+            ))}
           </select>
         </label>
         <br></br>
@@ -208,9 +224,12 @@ function AssignmentsPage(){
             name="selectedServiceLevel"
             value = {serviceLevelName}
             onChange={(e) => setServiceLevelName(e.target.value)}>
-            <option value="Planning Only">Planning Only</option>
-            <option value="Managed Portfolio">Managed Portfolio</option>
-            <option value="Rebalancing Guidance">Rebalancing Guidance</option>
+            <option value="">Select</option>
+            {serviceLevels.map((s) => (
+              <option key={s.serviceLevelID} value={s.serviceLevelName}>
+                {s.serviceLevelName}
+              </option>
+            ))}
           </select>
         </label>
         <br></br>
