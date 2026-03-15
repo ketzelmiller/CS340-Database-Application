@@ -20,7 +20,7 @@ const app = express();
 const cors = require('cors');
 
 // Set a port in the range: 1024 < PORT < 65535
-const PORT = 6044;
+const PORT = 6098;
 
 
 // If on FLIP or classwork, use cors() middleware to allow cross-origin requests from the frontend with your port number:
@@ -66,6 +66,50 @@ app.get('/reset', async (req, res) => {
     } catch(err){
         console.error(err)
         res.status(500).send({ error: 'Reset Failed.' })
+    }
+});
+
+// ----------------------------
+// --- DROPDOWN READ Routes ---
+// ----------------------------
+// Dropdown Read Branch
+app.get('/dropdown/branches', async(req, res) => {
+    try{
+        const [rows] = await db.query('CALL sp_get_dropdown_branches();')
+        res.send(rows[0])
+    }catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to fetch branch dropdown." })
+    }
+});
+// Dropdown Read Advisor
+app.get('/dropdown/advisors', async(req, res) => {
+    try{
+        const [rows] = await db.query('CALL sp_get_dropdown_advisors();')
+        res.send(rows[0])
+    }catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to fetch advisor dropdown." })
+    }
+});
+// Dropdown Read Client
+app.get('/dropdown/clients', async(req, res) => {
+    try{
+        const [rows] = await db.query('CALL sp_get_dropdown_clients();')
+        res.send(rows[0])
+    }catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to fetch client dropdown." })
+    }
+});
+// Dropdown Read Service Level
+app.get('/dropdown/serviceLevels', async(req, res) => {
+    try{
+        const [rows] = await db.query('CALL sp_get_dropdown_service_levels();')
+        res.send(rows[0])
+    }catch(err){
+        console.error(err)
+        res.status(500).send({ error: "Failed to fetch service level dropdown." })
     }
 });
 
