@@ -190,6 +190,7 @@ function AssignmentsPage(){
           <select 
             style={{marginBottom: '7px'}} 
             name="selectedAdvisor"
+            required="required"
             value = {advisorName}
             onChange={(e) => setAdvisorName(e.target.value)}>
             <option value="">Select</option>
@@ -206,6 +207,7 @@ function AssignmentsPage(){
           <select 
             style={{marginBottom: '7px'}} 
             name="selectedClient"
+            required="required"
             value = {clientName}
             onChange={(e) => setClientName(e.target.value)}>
             <option value="">Select</option>
@@ -222,6 +224,7 @@ function AssignmentsPage(){
           <select 
             style={{marginBottom: '7px'}}
             name="selectedServiceLevel"
+            required="required"
             value = {serviceLevelName}
             onChange={(e) => setServiceLevelName(e.target.value)}>
             <option value="">Select</option>
