@@ -28,7 +28,7 @@ CREATE PROCEDURE sp_get_dropdown_advisors(
 
 )
 BEGIN
-    SELECT advisorID, CONCAT(firstName, ' ', lastName) FROM Advisors;
+    SELECT advisorID, CONCAT(firstName, ' ', lastName) as advisorName FROM Advisors;
 
     -- Example of how to get the necessary information for a dropdown of advisors:
         -- CALL sp_get_dropdown_advisors();
@@ -42,7 +42,7 @@ CREATE PROCEDURE sp_get_dropdown_clients(
 
 )
 BEGIN
-    SELECT clientID, CONCAT(firstName, ' ', lastName) FROM Clients;
+    SELECT clientID, CONCAT(firstName, ' ', lastName) as clientName FROM Clients;
 
     -- Example of how to get the necessary information for a dropdown of clients:
         -- CALL sp_get_dropdown_clients();
