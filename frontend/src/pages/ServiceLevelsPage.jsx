@@ -12,7 +12,10 @@ function ServiceLevelsPage(){
   const [serviceLevelName, setServiceLevelName] = useState("")
   const [description, setDescription] = useState("")
 
-  const backend = "http://classwork.engr.oregonstate.edu:6044"
+  const [updateServiceLevelName, setUpdateServiceLevelName] = useState("")
+  const [updateDescription, setUpdateDescription] = useState("")
+
+  const backend = "http://classwork.engr.oregonstate.edu:6098"
   //const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
   //const backend = "http://localhost:3001"
 
@@ -78,8 +81,8 @@ function ServiceLevelsPage(){
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          serviceLevelName: serviceLevelName,
-          description: description
+          serviceLevelName: updateServiceLevelName,
+          description: updateDescription
         })
       })
 
@@ -89,8 +92,8 @@ function ServiceLevelsPage(){
 
       // Refresh table and clear fields
       await loadServiceLevels();
-      setServiceLevelName("");
-      setDescription("");
+      setUpdateServiceLevelName("");
+      setUpdateDescription("");
 
     }catch(err){
       console.log(err)
@@ -160,6 +163,31 @@ function ServiceLevelsPage(){
         />
         <br></br>
         <button style={{marginTop: '5px', padding:'7px'}} type="submit">Add Service Level</button>
+      </form>
+
+      <h2>Modify Service Level</h2>
+      <p>To Modify a Service Level, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify</p>
+      <form>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="serviceLevelName" 
+          required="required" 
+          placeholder="Enter name" 
+          value={updateServiceLevelName} 
+          onChange={(e) => setUpdateServiceLevelName(e.target.value)}
+        />
+        <br></br>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="serviceLevelName" 
+          required="required" 
+          placeholder="Enter description" 
+          value={updateDescription} 
+          onChange={(e) => setUpdateDescription(e.target.value)}
+        />
+        <br></br>
       </form>
     </div>
   )
