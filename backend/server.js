@@ -8,7 +8,7 @@
 
 // --------- NEW DB CONNECTOR CODE 2/24/26 ------------
 const db = require('./db-connector');
-const MY_ONID = "truittl";
+const MY_ONID = "etzelmik";
 
 // Express library used to create a web server that will listen and respond to API calls from the frontend
 const express = require('express');
@@ -20,7 +20,7 @@ const app = express();
 const cors = require('cors');
 
 // Set a port in the range: 1024 < PORT < 65535
-const PORT = 6098;
+const PORT = 28544;
 
 
 // If on FLIP or classwork, use cors() middleware to allow cross-origin requests from the frontend with your port number:
