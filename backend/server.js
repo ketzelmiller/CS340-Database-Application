@@ -56,7 +56,9 @@ app.get('/', async (req, res) => {
     }
 });
 
+// -------------------
 // --- RESET ROUTE ---
+// -------------------
 app.get('/reset', async (req, res) => {
     try{
         await db.query('CALL sp_create_database();')
@@ -67,7 +69,10 @@ app.get('/reset', async (req, res) => {
     }
 });
 
-// --- READ: BRANCHES ---
+// -------------------
+// --- READ Routes ---
+// -------------------
+// Read Branches
 app.get('/branches', async(req, res) => {
     try{
         const[rows] = await db.query('CALL sp_get_all_branches();')
@@ -77,9 +82,7 @@ app.get('/branches', async(req, res) => {
         res.status(500).send({ error: 'Failed to fetch branches.' })
     }
 });
-
-
-// --- READ: ADVISORS ---
+// Read Advisors
 app.get('/advisors', async(req, res) => {
     try{
         const[rows] = await db.query('CALL sp_get_all_advisors();')
@@ -89,8 +92,7 @@ app.get('/advisors', async(req, res) => {
         res.status(500).send({ error: 'Failed to fetch advisors.' })
     }
 });
-
-// --- READ: CLIENTS ---
+// Read Clients
 app.get('/clients', async(req, res) => {
     try{
         const[rows] = await db.query('CALL sp_get_all_clients();')
@@ -100,8 +102,7 @@ app.get('/clients', async(req, res) => {
         res.status(500).send({ error: 'Failed to fetch clients.' })
     }
 });
-
-// --- READ: SERVICE LEVELS ---
+// Read Service Levels
 app.get('/serviceLevels', async(req, res) => {
     try{
         const[rows] = await db.query('CALL sp_get_all_service_levels();')
@@ -111,9 +112,7 @@ app.get('/serviceLevels', async(req, res) => {
         res.status(500).send({ error: 'Failed to fetch Service Levels.' })
     }
 });
-
-// NOTE FOR FUTURE SELF - Remember multi-line queries must use `` instead of ''
-// --- READ: ASSIGNMENTS ---
+// Read Assignments
 app.get('/assignments', async(req, res) => {
     try{
         const[rows] = await db.query(`CALL sp_get_all_assignments();`)
@@ -124,7 +123,10 @@ app.get('/assignments', async(req, res) => {
     }
 });
 
-// --- DELETE BRANCH ---
+// ---------------------
+// --- DELETE Routes ---
+// ---------------------
+// Delete Branch
 app.delete('/branches/:branchID', async (req, res) => {
   try {
     // DEBUGGING
@@ -139,8 +141,7 @@ app.delete('/branches/:branchID', async (req, res) => {
     return res.status(500).send({ error: 'Failed to delete branch.' });
   }
 });
-
-// --- DELETE ADVISOR ---
+// Delete Advisor
 app.delete('/advisors/:advisorID', async (req, res) => {
     //DEGUBBING
     console.log("DELETE /advisors on ID", req.params.advisorID)
@@ -155,8 +156,7 @@ app.delete('/advisors/:advisorID', async (req, res) => {
     return res.status(500).send({ error: 'Failed to delete advisor.' });
   }
 });
-
-// --- DELETE CLIENTS ---
+// Delete Client
 app.delete('/clients/:clientID', async (req, res) => {
     //DEGUBBING
     console.log("DELETE /clients on ID", req.params.advisorID)
@@ -171,8 +171,7 @@ app.delete('/clients/:clientID', async (req, res) => {
     return res.status(500).send({ error: 'Failed to delete client.' });
   }
 });
-
-// --- DELETE SERVICE LEVEL ---
+// Delete Service Level
 app.delete('/serviceLevels/:serviceLevelID', async (req, res) => {
     //DEGUBBING
     console.log("DELETE /serviceLevel on ID", req.params.serviceLevelID)
@@ -187,8 +186,7 @@ app.delete('/serviceLevels/:serviceLevelID', async (req, res) => {
     return res.status(500).send({ error: 'Failed to delete service level.' });
   }
 });
-
-// --- DELETE ASSIGNMENT ---
+// Delete Assignment
 app.delete('/assignments/:assignmentID', async (req, res) => {
     //DEGUBBING
     console.log("DELETE /assignment on ID", req.params.assignmentID)
@@ -204,7 +202,10 @@ app.delete('/assignments/:assignmentID', async (req, res) => {
   }
 });
 
-// --- POST BRANCHES ---
+// ---------------------
+// --- POST Routes -----
+// ---------------------
+// Create Branch
 app.post('/branches', async(req, res) =>{
     // DEBUGGING
     console.log("POST /branches", req.body)
@@ -229,8 +230,7 @@ app.post('/branches', async(req, res) =>{
         res.status(500).send({ error: "Failed to create branch." })
     }
 });
-
-// --- POST ADVISORS ---
+// Create Advisor
 app.post('/advisors', async(req, res) =>{
     // DEBUGGING
     console.log("POST /advisors", req.body)
@@ -255,8 +255,7 @@ app.post('/advisors', async(req, res) =>{
         res.status(500).send({ error: "Failed to create advisor." })
     }
 });
-
-// --- POST CLIENTS ---
+// Create Client
 app.post('/clients', async(req, res) =>{
     // DEBUGGING
     console.log("POST /clients", req.body)
@@ -281,8 +280,7 @@ app.post('/clients', async(req, res) =>{
         res.status(500).send({ error: "Failed to create client." })
     }
 });
-
-// --- POST SERVICE LEVEL ---
+// Create Service Level
 app.post('/serviceLevels', async(req, res) =>{
     // DEBUGGING
     console.log("POST /serviceLevels", req.body)
@@ -307,9 +305,7 @@ app.post('/serviceLevels', async(req, res) =>{
         res.status(500).send({ error: "Failed to create service level." })
     }
 });
-
-
-// --- POST ASSIGNMENTS ---
+// Create Assignment
 app.post('/assignments', async(req, res) =>{
     // DEBUGGING
     console.log("POST /assignments", req.body)
@@ -335,7 +331,10 @@ app.post('/assignments', async(req, res) =>{
     }
 });
 
-// --- UPDATE BRANCHES ---
+// -----------------------
+// --- UPDATE Routes -----
+// -----------------------
+// Update Branch
 app.put('/branches/:branchID', async(req, res) => {
     //DEBUGGING
     console.log("UPDATE /branches/:branchID", req.params.branchID)
@@ -361,8 +360,7 @@ app.put('/branches/:branchID', async(req, res) => {
         res.status(500).send({ error: "Failed to update branch" })
     }
 });
-
-// --- UPDATE ADVISORS ---
+// Update Advisor
 app.put('/advisors/:advisorID', async(req, res) => {
     //DEBUGGING
     console.log("UPDATE /advisors/:advisorID", req.params.advisorID)
@@ -388,8 +386,7 @@ app.put('/advisors/:advisorID', async(req, res) => {
         res.status(500).send({ error: "Failed to update advisor" })
     }
 });
-
-// --- UPDATE CLIENTS ---
+// Update Client
 app.put('/clients/:clientID', async(req, res) => {
     //DEBUGGING
     console.log("UPDATE /clients/:clientID", req.params.clientID)
@@ -415,8 +412,7 @@ app.put('/clients/:clientID', async(req, res) => {
         res.status(500).send({ error: "Failed to update client" })
     }
 });
-
-// --- UPDATE SERVICE LEVELS ---
+// Update Service Level
 app.put('/serviceLevels/:serviceLevelID', async(req, res) => {
     //DEBUGGING
     console.log("UPDATE /serviceLevels/:serviceLevelID", req.params.serviceLevelID)
@@ -442,8 +438,7 @@ app.put('/serviceLevels/:serviceLevelID', async(req, res) => {
         res.status(500).send({ error: "Failed to update service level" })
     }
 });
-
-// --- UPDATE ASSIGNMENT ---
+// Update Assignment
 app.put('/assignments/:assignmentID', async(req, res) => {
     //DEBUGGING
     console.log("UPDATE /assignments/:assignmentID", req.params.assignmentID)
