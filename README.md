@@ -1,2 +1,2 @@
 Lucca Truitt & Kyle Etzelmiller <br>
-Citations for code are included in each file
+All code is original unless stated otherwise via in-file citations.
