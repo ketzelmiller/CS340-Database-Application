@@ -21,7 +21,7 @@ function AdvisorsPage(){
 
   const [branches, setBranches] = useState([])
 
-  const backend = "http://classwork.engr.oregonstate.edu:6098"
+  const backend = "http://classwork.engr.oregonstate.edu:28544"
   //const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
   //const backend = "http://localhost:3001"
 
@@ -173,7 +173,7 @@ function AdvisorsPage(){
       <hr></hr>
 
       <h2>Insert Advisor</h2>
-      <form onSubmit={addAdvisor}>
+      <form className='advisor-form' onSubmit={addAdvisor}>
         <input 
           style={{padding:'7px'}} 
           type="text" 
@@ -214,7 +214,7 @@ function AdvisorsPage(){
             onChange={(e) => setBranch(e.target.value)}>
             <option value="">Select</option>
             {branches.map((b) => (
-              <option key={b.branchID} value={b.branchName}>
+              <option key={b.branchID} value={b.branchID}>
                 {b.branchName}
               </option>
             ))}
@@ -226,7 +226,7 @@ function AdvisorsPage(){
 
       <h2>Modify Advisor</h2>
       <p>To Modify an Advisor, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify.</p>
-      <form>
+      <form className='advisor-form'>
         <input 
           style={{padding:'7px'}} 
           type="text" 
@@ -267,7 +267,7 @@ function AdvisorsPage(){
             onChange={(e) => setUpdateBranch(e.target.value)}>
             <option value="">Select</option>
             {branches.map((b) => (
-              <option key={b.branchID} value={b.branchName}>
+              <option key={b.branchID} value={b.branchID}>
                 {b.branchName}
               </option>
             ))}

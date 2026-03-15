@@ -30,7 +30,7 @@ function AssignmentsPage(){
   const [clients, setClients] = useState([])
   const [serviceLevels, setServiceLevels] = useState([])
 
-  const backend = "http://classwork.engr.oregonstate.edu:6098"
+  const backend = "http://classwork.engr.oregonstate.edu:28544"
    //const backend = "http://localhost:3001"
 
   async function loadAssignments(){
@@ -128,17 +128,20 @@ function AssignmentsPage(){
   async function loadAdvisorDropdown(){
     const res = await fetch(`${backend}/dropdown/advisors`)
     const data = await res.json()
-    setAdvisors(Array.isArray(data[0]) ? data[0] : data)
+    setAdvisors(data)
+    console.log("Advisors dropdown data: ", data)
   }
   async function loadClientDropdown(){
     const res = await fetch(`${backend}/dropdown/clients`)
     const data = await res.json()
-    setClients(Array.isArray(data[0]) ? data[0] : data)
+    setClients(data)
+    console.log("Clients dropdown data: ", data)
   }
   async function loadServiceLevelDropdown(){
     const res = await fetch(`${backend}/dropdown/serviceLevels`)
     const data = await res.json()
-    setServiceLevels(Array.isArray(data[0]) ? data[0] : data)
+    setServiceLevels(data)
+    console.log("Service Level dropdown data: ", data)
   }
 
   // Reload page
@@ -188,7 +191,8 @@ function AssignmentsPage(){
       </table>
 
       <hr></hr>
-
+      
+      
       <h2>Insert Assignment</h2> 
       <form className='assignment-form' onSubmit={addAssignment}>
         <label>
@@ -201,8 +205,8 @@ function AssignmentsPage(){
             onChange={(e) => setAdvisorName(e.target.value)}>
             <option value="">Select</option>
             {advisors.map((a) => (
-              <option key={a.advisorID} value={a.advisorName}>
-                {a.advisorName}
+              <option key={a.advisorID} value={a.advisorID}>
+                {a["CONCAT(firstName, ' ', lastName)"]}
               </option>
             ))}
           </select>
@@ -218,8 +222,8 @@ function AssignmentsPage(){
             onChange={(e) => setClientName(e.target.value)}>
             <option value="">Select</option>
             {clients.map((c) => (
-              <option key={c.clientID} value={c.clientName}>
-                {c.clientName}
+              <option key={c.clientID} value={c.clientID}>
+                {c["CONCAT(firstName, ' ', lastName)"]}
               </option>
             ))}
           </select>
@@ -235,7 +239,7 @@ function AssignmentsPage(){
             onChange={(e) => setServiceLevelName(e.target.value)}>
             <option value="">Select</option>
             {serviceLevels.map((s) => (
-              <option key={s.serviceLevelID} value={s.serviceLevelName}>
+              <option key={s.serviceLevelID} value={s.serviceLevelID}>
                 {s.serviceLevelName}
               </option>
             ))}
@@ -267,7 +271,6 @@ function AssignmentsPage(){
         <br></br>
         <button style={{marginTop: '7px'}} type="submit">Add Assignment</button>
       </form>
-
       <h2>Modify Assignment</h2>
       <p>To Modify an Assignment, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify.</p>
       <form className='assignment-form'>
@@ -281,8 +284,8 @@ function AssignmentsPage(){
             onChange={(e) => setUpdateAdvisorName(e.target.value)}>
             <option value="">Select</option>
             {advisors.map((a) => (
-              <option key={a.advisorID} value={a.advisorName}>
-                {a.advisorName}
+              <option key={a.advisorID} value={a.advisorID}>
+                {a["CONCAT(firstName, ' ', lastName)"]}
               </option>
             ))}
           </select>
@@ -298,8 +301,8 @@ function AssignmentsPage(){
             onChange={(e) => setUpdateClientName(e.target.value)}>
             <option value="">Select</option>
             {clients.map((c) => (
-              <option key={c.clientID} value={c.clientName}>
-                {c.clientName}
+              <option key={c.clientID} value={c.clientID}>
+                {c["CONCAT(firstName, ' ', lastName)"]}
               </option>
             ))}
           </select>
@@ -315,7 +318,7 @@ function AssignmentsPage(){
             onChange={(e) => setUpdateServiceLevelName(e.target.value)}>
             <option value="">Select</option>
             {serviceLevels.map((s) => (
-              <option key={s.serviceLevelID} value={s.serviceLevelName}>
+              <option key={s.serviceLevelID} value={s.serviceLevelID}>
                 {s.serviceLevelName}
               </option>
             ))}

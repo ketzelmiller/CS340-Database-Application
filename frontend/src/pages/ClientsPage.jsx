@@ -24,7 +24,7 @@ function ClientsPage(){
   const [updateEmail, setUpdateEmail] = useState("")
   const [updateDateOfBirth, setUpdateDateOfBirth] = useState("")
 
-  const backend = "http://classwork.engr.oregonstate.edu:6098"
+  const backend = "http://classwork.engr.oregonstate.edu:28544"
    //const backend = "http://localhost:3001"
 
   async function loadClients(){
@@ -159,7 +159,7 @@ function ClientsPage(){
       <hr></hr>
 
       <h2>Insert Client</h2>
-      <form onSubmit={addClient}>
+      <form className='client-form' onSubmit={addClient}>
         <input 
           style={{padding:'7px'}} 
           type="text" 
@@ -207,7 +207,7 @@ function ClientsPage(){
 
       <h2>Modify Client</h2>
       <p>To Modify a Client, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify.</p>
-      <form>
+      <form className='client-form'>
         <input 
           style={{padding:'7px'}} 
           type="text" 

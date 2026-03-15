@@ -15,7 +15,7 @@ function ServiceLevelsPage(){
   const [updateServiceLevelName, setUpdateServiceLevelName] = useState("")
   const [updateDescription, setUpdateDescription] = useState("")
 
-  const backend = "http://classwork.engr.oregonstate.edu:6098"
+  const backend = "http://classwork.engr.oregonstate.edu:28544"
   //const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
   //const backend = "http://localhost:3001"
 
@@ -141,7 +141,7 @@ function ServiceLevelsPage(){
       <hr></hr>
 
       <h2>Insert Service Level</h2>
-      <form onSubmit={addServiceLevel}>
+      <form className='service-level-form' onSubmit={addServiceLevel}>
         <input 
           style={{padding:'7px'}} 
           type="text" 
@@ -167,7 +167,7 @@ function ServiceLevelsPage(){
 
       <h2>Modify Service Level</h2>
       <p>To Modify a Service Level, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify.</p>
-      <form>
+      <form className='service-level-form'>
         <input 
           style={{padding:'7px'}} 
           type="text" 
