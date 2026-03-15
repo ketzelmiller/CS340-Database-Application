@@ -20,6 +20,12 @@ function AssignmentsPage(){
   const [relationshipStartDate, setRelationshipStartDate] = useState("")
   const [relationshipEndDate, setRelationshipEndDate] = useState("")
 
+  const [updateAdvisorName, setUpdateAdvisorName] = useState("")
+  const [updateClientName, setUpdateClientName] = useState("")
+  const [updateServiceLevelName, setUpdateServiceLevelName] = useState("")
+  const [updateRelationshipStartDate, setUpdateRelationshipStartDate] = useState("")
+  const [updateRelationshipEndDate, setUpdateRelationshipEndDate] = useState("")
+
   const [advisors, setAdvisors] = useState([])
   const [clients, setClients] = useState([])
   const [serviceLevels, setServiceLevels] = useState([])
@@ -92,11 +98,11 @@ function AssignmentsPage(){
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          advisorName: advisorName,
-          clientName: clientName,
-          serviceLevelName: serviceLevelName,
-          relationshipStartDate: relationshipStartDate,
-          relationshipEndDate: relationshipEndDate || null
+          advisorName: updateAdvisorName,
+          clientName: updateClientName,
+          serviceLevelName: updateServiceLevelName,
+          relationshipStartDate: updateRelationshipStartDate,
+          relationshipEndDate: updateRelationshipEndDate || null
         })
       })
 
@@ -106,11 +112,11 @@ function AssignmentsPage(){
 
       // Refresh table and clear fields
       await loadAssignments();
-      setAdvisorName("")
-      setClientName("")
-      setServiceLevelName("")
-      setRelationshipStartDate("")
-      setRelationshipEndDate("")
+      setUpdateAdvisorName("")
+      setUpdateClientName("")
+      setUpdateServiceLevelName("")
+      setUpdateRelationshipStartDate("")
+      setUpdateRelationshipEndDate("")
 
     }catch(err){
       console.log(err)
@@ -256,6 +262,86 @@ function AssignmentsPage(){
             name="endDate"
             value={relationshipEndDate}
             onChange={(e) => setRelationshipEndDate(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <button style={{marginTop: '7px'}} type="submit">Add Assignment</button>
+      </form>
+
+      <h2>Modify Assignment</h2>
+      <p>To Modify an Assignment, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify</p>
+      <form className='assignment-form'>
+        <label>
+          Select Advisor:
+          <select 
+            style={{marginBottom: '7px'}} 
+            name="selectedAdvisor"
+            required="required"
+            value = {updateAdvisorName}
+            onChange={(e) => setUpdateAdvisorName(e.target.value)}>
+            <option value="">Select</option>
+            {advisors.map((a) => (
+              <option key={a.advisorID} value={a.advisorName}>
+                {a.advisorName}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br></br>
+        <label>
+          Select Client:
+          <select 
+            style={{marginBottom: '7px'}} 
+            name="selectedClient"
+            required="required"
+            value = {updateClientName}
+            onChange={(e) => setUpdateClientName(e.target.value)}>
+            <option value="">Select</option>
+            {clients.map((c) => (
+              <option key={c.clientID} value={c.clientName}>
+                {c.clientName}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br></br>
+        <label>
+          Select Service Level:
+          <select 
+            style={{marginBottom: '7px'}}
+            name="selectedServiceLevel"
+            required="required"
+            value = {updateServiceLevelName}
+            onChange={(e) => setUpdateServiceLevelName(e.target.value)}>
+            <option value="">Select</option>
+            {serviceLevels.map((s) => (
+              <option key={s.serviceLevelID} value={s.serviceLevelName}>
+                {s.serviceLevelName}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br></br>
+        <label>
+          Enter Start Date:
+          <input 
+            style={{marginBottom: '7px'}}
+            type="date"
+            name="startDate"
+            required="required"
+            value={updateRelationshipStartDate} 
+            onChange={(e) => setUpdateRelationshipStartDate(e.target.value)}
+          />
+        </label>
+        <br></br>
+        <label>
+          Enter End Date, if any:
+          <input 
+            style={{marginBottom: '7px'}} 
+            type="date" 
+            name="endDate"
+            value={updateRelationshipEndDate}
+            onChange={(e) => setUpdateRelationshipEndDate(e.target.value)}
           />
         </label>
         <br></br>
