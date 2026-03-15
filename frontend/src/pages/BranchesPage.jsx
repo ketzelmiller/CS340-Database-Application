@@ -236,7 +236,7 @@ function BranchesPage(){
       </form>
 
       <h2>Modify Branch</h2>
-      <p>To Modify a Branch, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify</p>
+      <p>To Modify a Branch, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify.</p>
       <form>
         <input 
           style={{padding:'7px'}} 
@@ -321,7 +321,6 @@ function BranchesPage(){
             <option value="WY">WY</option>
           </select>
         </label>
-        <br></br>
       </form>
     </div>
   )

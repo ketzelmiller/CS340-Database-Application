@@ -269,7 +269,7 @@ function AssignmentsPage(){
       </form>
 
       <h2>Modify Assignment</h2>
-      <p>To Modify an Assignment, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify</p>
+      <p>To Modify an Assignment, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify.</p>
       <form className='assignment-form'>
         <label>
           Select Advisor:
@@ -344,7 +344,6 @@ function AssignmentsPage(){
             onChange={(e) => setUpdateRelationshipEndDate(e.target.value)}
           />
         </label>
-        <br></br>
         <button style={{marginTop: '7px'}} type="submit">Add Assignment</button>
       </form>
     </div>

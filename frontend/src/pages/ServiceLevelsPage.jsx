@@ -166,7 +166,7 @@ function ServiceLevelsPage(){
       </form>
 
       <h2>Modify Service Level</h2>
-      <p>To Modify a Service Level, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify</p>
+      <p>To Modify a Service Level, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify.</p>
       <form>
         <input 
           style={{padding:'7px'}} 
@@ -187,7 +187,6 @@ function ServiceLevelsPage(){
           value={updateDescription} 
           onChange={(e) => setUpdateDescription(e.target.value)}
         />
-        <br></br>
       </form>
     </div>
   )

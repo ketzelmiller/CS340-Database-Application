@@ -206,7 +206,7 @@ function ClientsPage(){
       </form>
 
       <h2>Modify Client</h2>
-      <p>To Modify a Client, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify</p>
+      <p>To Modify a Client, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify.</p>
       <form>
         <input 
           style={{padding:'7px'}} 
@@ -249,7 +249,6 @@ function ClientsPage(){
             onChange={(e) => setUpdateDateOfBirth(e.target.value)}
           />
         </label>
-        <br></br>
       </form>
     </div>
   )

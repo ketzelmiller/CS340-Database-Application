@@ -225,7 +225,7 @@ function AdvisorsPage(){
       </form>
 
       <h2>Modify Advisor</h2>
-      <p>To Modify an Advisor, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify</p>
+      <p>To Modify an Advisor, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify.</p>
       <form>
         <input 
           style={{padding:'7px'}} 
@@ -273,7 +273,6 @@ function AdvisorsPage(){
             ))}
           </select>
         </label>
-        <br></br>
       </form>
     </div>
   )
