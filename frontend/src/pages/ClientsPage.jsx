@@ -19,7 +19,12 @@ function ClientsPage(){
   const [email, setEmail] = useState("")
   const [dateOfBirth, setDateOfBirth] = useState("")
 
-  const backend = "http://classwork.engr.oregonstate.edu:6044"
+  const [updateFirstName, setUpdateFirstName] = useState("")
+  const [updateLastName, setUpdateLastName] = useState("")
+  const [updateEmail, setUpdateEmail] = useState("")
+  const [updateDateOfBirth, setUpdateDateOfBirth] = useState("")
+
+  const backend = "http://classwork.engr.oregonstate.edu:6098"
    //const backend = "http://localhost:3001"
 
   async function loadClients(){
@@ -87,10 +92,10 @@ function ClientsPage(){
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          dateOfBirth: dateOfBirth
+          firstName: updateFirstName,
+          lastName: updateLastName,
+          email: updateEmail,
+          dateOfBirth: updateDateOfBirth
         })
       })
 
@@ -100,10 +105,10 @@ function ClientsPage(){
 
       // Refresh table and clear fields
       await loadClients();
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setDateOfBirth("");
+      setUpdateFirstName("");
+      setUpdateLastName("");
+      setUpdateEmail("");
+      setUpdateDateOfBirth("");
 
     }catch(err){
       console.log(err)
@@ -198,6 +203,53 @@ function ClientsPage(){
         </label>
         <br></br>
         <button style={{marginTop: '8px', padding:'7px'}} type="submit">Add Client</button>
+      </form>
+
+      <h2>Modify Client</h2>
+      <p>To Modify a Client, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify</p>
+      <form>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="firstName" 
+          required="required" 
+          placeholder="Enter first name" 
+          value={updateFirstName} 
+          onChange={(e) => setUpdateFirstName(e.target.value)}
+        />
+        <br></br>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="lastName" 
+          required="required" 
+          placeholder="Enter last name" 
+          value={updateLastName} 
+          onChange={(e) => setUpdateLastName(e.target.value)}
+        />
+        <br></br>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="email" 
+          required="required" 
+          placeholder="Enter email" 
+          value={updateEmail} 
+          onChange={(e) => setUpdateEmail(e.target.value)}
+        />
+        <br></br> 
+        <label>
+          Enter Date of Birth:
+          <input 
+            style={{marginLeft:'8px'}} 
+            type="date"   
+            name="dateOfBirth" 
+            required="required"
+            value={updateDateOfBirth} 
+            onChange={(e) => setUpdateDateOfBirth(e.target.value)}
+          />
+        </label>
+        <br></br>
       </form>
     </div>
   )
