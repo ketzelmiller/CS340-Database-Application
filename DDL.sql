@@ -1,4 +1,5 @@
-/*Group 26 Lucca Truitt/Kyle Etzelmiller*/
+-- Group 26 Lucca Truitt & Kyle Etzelmiller
+-- DDL file for CS 340 Portfolio Project
 
 -- Citation for the following code:
 -- Date: 3/2/2026
