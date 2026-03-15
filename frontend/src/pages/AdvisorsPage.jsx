@@ -14,6 +14,11 @@ function AdvisorsPage(){
   const [email, setEmail] = useState("")
   const [branch, setBranch] = useState("")
 
+  const [updateFirstName, setUpdateFirstName] = useState("")
+  const [updateLastName, setUpdateLastName] = useState("")
+  const [updateEmail, setUpdateEmail] = useState("")
+  const [updateBranch, setUpdateBranch] = useState("")
+
   const [branches, setBranches] = useState([])
 
   const backend = "http://classwork.engr.oregonstate.edu:6098"
@@ -93,10 +98,10 @@ function AdvisorsPage(){
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          branch: branch
+          firstName: updateFirstName,
+          lastName: updateLastName,
+          email: updateEmail,
+          branch: updateBranch
         })
       })
 
@@ -106,10 +111,10 @@ function AdvisorsPage(){
 
       // Refresh table and clear fields
       await loadAdvisors();
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setBranch("");
+      setUpdateFirstName("");
+      setUpdateLastName("");
+      setUpdateEmail("");
+      setUpdateBranch("");
 
     }catch(err){
       console.log(err)
@@ -217,6 +222,58 @@ function AdvisorsPage(){
         </label>
         <br></br>
         <button style={{marginTop: '8px', padding:'8px'}} type="submit">Add Advisor</button>
+      </form>
+
+      <h2>Modify Advisor</h2>
+      <p>To Modify an Advisor, enter data in the form below, then click the 'update' button <br></br> next to the row you wish to modify</p>
+      <form>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="firstName" 
+          required="required" 
+          placeholder="Enter first name" 
+          value={updateFirstName} 
+          onChange={(e) => setUpdateFirstName(e.target.value)}
+        />
+        <br></br>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="lastName" 
+          required="required" 
+          placeholder="Enter last name" 
+          value={updateLastName} 
+          onChange={(e) => setUpdateLastName(e.target.value)}
+        />
+        <br></br>
+        <input 
+          style={{padding:'7px'}} 
+          type="text" 
+          name="email" 
+          required="required" 
+          placeholder="Enter email" 
+          value={updateEmail} 
+          onChange={(e) => setUpdateEmail(e.target.value)}
+        />
+        <br></br>
+        <label>
+          Select Branch:
+          <select 
+            style={{marginLeft:'7px'}} 
+            name="selectedBranch"
+            required="required" 
+            value = {updateBranch}
+            onChange={(e) => setUpdateBranch(e.target.value)}>
+            <option value="">Select</option>
+            {branches.map((b) => (
+              <option key={b.branchID} value={b.branchName}>
+                {b.branchName}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br></br>
       </form>
     </div>
   )
