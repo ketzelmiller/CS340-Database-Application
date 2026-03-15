@@ -58,7 +58,8 @@ CREATE PROCEDURE sp_get_dropdown_service_levels(
 
 )
 BEGIN
-    SELECT serviceLevelID, serviceLevelName FROM ServiceLevels;
+    SELECT serviceLevelID, serviceLevelName FROM ServiceLevels
+    ORDER BY serviceLevelID ASC;
 
     -- Example of how to get the necessary information for a dropdown of service levels:
         -- CALL sp_get_dropdown_service_levels();
