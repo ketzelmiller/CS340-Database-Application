@@ -14,7 +14,9 @@ function AdvisorsPage(){
   const [email, setEmail] = useState("")
   const [branch, setBranch] = useState("")
 
-  const backend = "http://classwork.engr.oregonstate.edu:6044"
+  const [branches, setBranches] = useState([])
+
+  const backend = "http://classwork.engr.oregonstate.edu:6098"
   //const backend = import.meta.env.VITE_BACKEND_URL || "http://classwork.engr.oregonstate.edu:28542"
   //const backend = "http://localhost:3001"
 
@@ -115,7 +117,15 @@ function AdvisorsPage(){
     }
   }
 
+  // --- GET DROPDOWN ---
+  async function loadBranchDropdown(){
+    const res = await fetch(`${backend}/dropdown/branches`)
+    const data = await res.json()
+    setBranches(Array.isArray(data[0]) ? data[0] : data)
+  }
+
   useEffect(() => {
+    loadBranchDropdown()
     loadAdvisors()
   }, []);
 
@@ -194,12 +204,15 @@ function AdvisorsPage(){
           <select 
             style={{marginLeft:'7px'}} 
             name="selectedBranch"
+            required="required" 
             value = {branch}
             onChange={(e) => setBranch(e.target.value)}>
-            <option value="Hawaii Branch">Hawaii Branch</option>
-            <option value="Massachusetts Branch">Massachusetts Branch</option>
-            <option value="Oregon Branch">Oregon Branch</option>
-            <option value="New York Branch">New York Branch</option>
+            <option value="">Select</option>
+            {branches.map((b) => (
+              <option key={b.branchID} value={b.branchName}>
+                {b.branchName}
+              </option>
+            ))}
           </select>
         </label>
         <br></br>
