@@ -153,7 +153,7 @@ function AssignmentsPage(){
   }, []);
 
   return(
-    <div style={{ padding: "20px"}}>
+    <div style={{ padding: "20px", display: "flex", flexDirection: "column", alignItems: "center"}}>
       <h1>Adivsor-Client Assignments</h1>
 
       <table className='assignment-table' border="3" style={{marginTop: "15px"}}>
@@ -190,11 +190,11 @@ function AssignmentsPage(){
         </tbody>
       </table>
 
-      <hr></hr>
+      <hr style={{width: "90%"}}></hr>
       
       
       <h2>Insert Assignment</h2> 
-      <form className='assignment-form' onSubmit={addAssignment}>
+      <form className='assignment-form' style={{width: "350px",  display: "flex", flexDirection: "column", alignItems: "center"}} onSubmit={addAssignment}>
         <label>
           Select Advisor:
           <select 
