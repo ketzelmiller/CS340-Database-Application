@@ -11,7 +11,7 @@ const path = require('path');
 const app = express();
 
 // We will simply hardcode the react PORT, but normally this should be inside .env
-const PORT = 6045;
+const PORT = 8346;
 
 // Serve the static files from the React app located in the build folder '/dist'
 // React router will take over frontend routing

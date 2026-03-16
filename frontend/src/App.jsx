@@ -46,7 +46,7 @@ function App(){
 
   return(
     <div className ='app'>
-      <h1>Financial Advisory Services Portal - Local Version</h1>
+      <h1>Financial Advisory Services Portal</h1>
 
       <Router>
         <nav className = 'appNav'>
