@@ -214,7 +214,7 @@ function AdvisorsPage(){
             onChange={(e) => setBranch(e.target.value)}>
             <option value="">Select</option>
             {branches.map((b) => (
-              <option key={b.branchID} value={b.branchID}>
+              <option key={b.branchID} value={b.branchName}>
                 {b.branchName}
               </option>
             ))}
@@ -267,7 +267,7 @@ function AdvisorsPage(){
             onChange={(e) => setUpdateBranch(e.target.value)}>
             <option value="">Select</option>
             {branches.map((b) => (
-              <option key={b.branchID} value={b.branchID}>
+              <option key={b.branchID} value={b.branchName}>
                 {b.branchName}
               </option>
             ))}
